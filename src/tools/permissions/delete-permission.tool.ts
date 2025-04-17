@@ -20,8 +20,7 @@ type DeletePermissionArgs = z.infer<typeof deletePermissionSchema>;
 
 export function registerDeletePermissionTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "delete-permission",

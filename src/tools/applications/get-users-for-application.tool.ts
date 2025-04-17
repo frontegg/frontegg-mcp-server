@@ -21,7 +21,6 @@ type GetUsersForApplicationArgs = z.infer<typeof getUsersForApplicationSchema>;
 // Function to register the get-users-for-application tool
 export function registerGetUsersForApplicationTool(
   server: McpServer,
-  fronteggToken: string | null,
   fronteggBaseUrl: string
 ) {
   server.tool(

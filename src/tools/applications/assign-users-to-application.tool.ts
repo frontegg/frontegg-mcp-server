@@ -30,8 +30,7 @@ type AssignUsersToApplicationArgs = z.infer<
 // Function to register the assign-users-to-application tool
 export function registerAssignUsersToApplicationTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "assign-users-to-application",

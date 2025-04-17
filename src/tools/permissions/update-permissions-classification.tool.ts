@@ -44,8 +44,7 @@ type UpdatePermissionsClassificationArgs = z.infer<
 
 export function registerUpdatePermissionsClassificationTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "update-permissions-classification",

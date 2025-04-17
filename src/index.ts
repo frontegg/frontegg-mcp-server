@@ -6,7 +6,7 @@ import { getValidToken, fronteggBaseUrl } from "./auth";
 import { registerAllTools } from "./tools/index";
 
 async function main() {
-  const fronteggToken = await getValidToken();
+  await getValidToken();
 
   logger.info("Starting Frontegg MCP Server...");
 
@@ -15,7 +15,7 @@ async function main() {
     version: "0.1.0",
   });
 
-  registerAllTools(server, fronteggToken, fronteggBaseUrl);
+  registerAllTools(server, fronteggBaseUrl);
 
   const transport = new StdioServerTransport();
 

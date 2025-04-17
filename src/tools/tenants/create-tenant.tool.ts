@@ -70,7 +70,6 @@ type CreateTenantArgs = z.infer<typeof createTenantSchema>;
 // Function to register the create-tenant tool
 export function registerCreateTenantTool(
   server: McpServer,
-  fronteggToken: string | null, // Expecting a vendor token
   fronteggBaseUrl: string
 ) {
   server.tool(

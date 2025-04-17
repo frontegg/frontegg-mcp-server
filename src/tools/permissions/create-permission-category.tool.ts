@@ -23,8 +23,7 @@ type CreatePermissionCategoryArgs = z.infer<
 
 export function registerCreatePermissionCategoryTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "create-permission-category",

@@ -35,8 +35,7 @@ type CreateTokenArgs = z.infer<typeof createTokenSchema>;
 // Function to register the create-token tool
 export function registerCreateTokenTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "create-token",

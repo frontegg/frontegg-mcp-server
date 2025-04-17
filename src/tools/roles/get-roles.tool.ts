@@ -21,7 +21,6 @@ type GetRolesArgs = z.infer<typeof getRolesSchema>;
 // Function to register the get-roles tool
 export function registerGetRolesTool(
   server: McpServer,
-  fronteggToken: string | null,
   fronteggBaseUrl: string
 ) {
   server.tool(

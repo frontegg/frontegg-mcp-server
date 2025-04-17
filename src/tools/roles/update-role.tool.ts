@@ -48,8 +48,7 @@ type UpdateRoleArgs = z.infer<typeof updateRoleSchema>;
 // Function to register the update-role tool
 export function registerUpdateRoleTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "update-role",

@@ -23,8 +23,7 @@ type GetClientCredentialsArgs = z.infer<typeof getClientCredentialsSchema>;
 // Function to register the get-client-credentials tool
 export function registerGetClientCredentialsTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "get-client-credentials",

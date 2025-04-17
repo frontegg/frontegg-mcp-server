@@ -25,7 +25,6 @@ type DeleteRoleArgs = z.infer<typeof deleteRoleSchema>;
 // Function to register the delete-role tool
 export function registerDeleteRoleTool(
   server: McpServer,
-  fronteggToken: string | null,
   fronteggBaseUrl: string
 ) {
   server.tool(

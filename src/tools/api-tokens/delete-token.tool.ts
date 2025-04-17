@@ -24,8 +24,7 @@ type DeleteTokenArgs = z.infer<typeof deleteTokenSchema>;
 // Function to register the delete-token tool
 export function registerDeleteTokenTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "delete-token",

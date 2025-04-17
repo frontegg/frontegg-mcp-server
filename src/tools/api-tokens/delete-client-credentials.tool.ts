@@ -26,8 +26,7 @@ type DeleteClientCredentialsArgs = z.infer<
 // Function to register the delete-client-credentials tool
 export function registerDeleteClientCredentialsTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "delete-client-credentials",

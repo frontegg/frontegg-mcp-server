@@ -17,8 +17,7 @@ type GetPermissionCategoriesArgs = z.infer<
 
 export function registerGetPermissionCategoriesTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "get-permission-categories",

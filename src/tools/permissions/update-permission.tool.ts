@@ -30,8 +30,7 @@ type UpdatePermissionArgs = z.infer<typeof updatePermissionSchema>;
 
 export function registerUpdatePermissionTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "update-permission",

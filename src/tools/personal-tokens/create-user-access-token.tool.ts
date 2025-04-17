@@ -37,7 +37,7 @@ type CreateUserAccessTokenArgs = z.infer<typeof createUserAccessTokenSchema>;
 // Function to register the create-user-access-token tool
 export function registerCreateUserAccessTokenTool(
   server: McpServer,
-  fronteggToken: string | null, // Expecting an environment/admin token
+  
   fronteggBaseUrl: string
 ) {
   server.tool(

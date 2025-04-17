@@ -24,7 +24,6 @@ type DeleteTenantArgs = z.infer<typeof deleteTenantSchema>;
 // Function to register the delete-tenant tool
 export function registerDeleteTenantTool(
   server: McpServer,
-  fronteggToken: string | null, // Expecting a vendor token
   fronteggBaseUrl: string
 ) {
   server.tool(

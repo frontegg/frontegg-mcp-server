@@ -21,8 +21,7 @@ type DeletePermissionCategoryArgs = z.infer<
 
 export function registerDeletePermissionCategoryTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "delete-permission-category",

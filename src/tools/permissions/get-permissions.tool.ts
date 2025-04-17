@@ -15,8 +15,7 @@ type GetPermissionsArgs = z.infer<typeof getPermissionsSchema>;
 
 export function registerGetPermissionsTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "get-permissions",

@@ -9,7 +9,6 @@ import {
   HttpMethods,
 } from "../../utils/api/frontegg-api";
 
-// Zod schema based on PUT /resources/tenants/v2/{tenantId} Request Body and Path Param
 const updateTenantSchema = z
   .object({
     tenantId: z
@@ -72,7 +71,6 @@ type UpdateTenantArgs = z.infer<typeof updateTenantSchema>;
 // Function to register the update-tenant tool
 export function registerUpdateTenantTool(
   server: McpServer,
-  fronteggToken: string | null, // Expecting a vendor token
   fronteggBaseUrl: string
 ) {
   server.tool(

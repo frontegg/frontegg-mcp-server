@@ -23,8 +23,7 @@ type GetTokensArgs = z.infer<typeof getTokensSchema>;
 // Function to register the get-tokens tool
 export function registerGetTokensTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "get-tokens",

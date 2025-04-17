@@ -39,8 +39,7 @@ type UpdateClientCredentialsArgs = z.infer<
 // Function to register the update-client-credentials tool
 export function registerUpdateClientCredentialsTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "update-client-credentials",

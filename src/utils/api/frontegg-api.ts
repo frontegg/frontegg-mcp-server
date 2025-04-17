@@ -40,16 +40,7 @@ export async function fetchFromFrontegg<T = any>(
 ): Promise<ApiResponse<T>> {
   try {
     const urlString = url.toString();
-    if (toolName) {
-      logger.debug(`[${toolName}] ${method} request to ${urlString}`, {
-        url: urlString,
-        method: method,
-        toolName: toolName,
-      });
-    }
 
-    // Always get a valid token before making a request
-    // This will automatically refresh if needed
     const validToken = await getValidToken();
     headers["Authorization"] = `Bearer ${validToken}`;
 
@@ -64,18 +55,6 @@ export async function fetchFromFrontegg<T = any>(
 
     // Execute the axios request
     const response: AxiosResponse<T> = await axios(config);
-
-    // Log response status if toolName is provided
-    if (toolName) {
-      logger.debug(
-        `[${toolName}] Response: ${response.status} ${response.statusText}`,
-        {
-          status: response.status,
-          statusText: response.statusText,
-          toolName: toolName,
-        }
-      );
-    }
 
     const isSuccess = response.status >= 200 && response.status < 300;
 
@@ -96,15 +75,6 @@ export async function fetchFromFrontegg<T = any>(
       status = axiosError.response?.status || 0;
       statusText = axiosError.response?.statusText || "Axios Error";
       errorData = axiosError.response?.data || axiosError.message;
-    }
-
-    if (toolName) {
-      logger.error(`[${toolName}] Request failed: ${statusText}`, {
-        status,
-        statusText,
-        error: errorData,
-        toolName,
-      });
     }
 
     return {
@@ -133,6 +103,28 @@ export function buildFronteggUrl(
 }
 
 /**
+ * Determines the text representation of an API response.
+ * @param response The API response object.
+ * @param customMessage An optional custom message to override the default text.
+ * @returns The string representation of the response.
+ */
+function _getResponseText(
+  response: ApiResponse<any>,
+  customMessage?: string
+): string {
+  // If custom message is provided, use it
+  if (customMessage) {
+    return customMessage;
+  }
+  // Otherwise just return the API response, or status if blank
+  else if (response.data) {
+    return JSON.stringify(response.data, null, 2);
+  } else {
+    return `Status: ${response.status} ${response.statusText}`;
+  }
+}
+
+/**
  * Format API response for tool output
  */
 export function formatToolResponse(
@@ -154,19 +146,7 @@ export function formatToolResponse(
       };
     }
 
-    // Simplest approach:
-    let responseText;
-
-    // If custom message is provided, use it
-    if (customMessage) {
-      responseText = customMessage;
-    }
-    // Otherwise just return the API response, or status if blank
-    else if (response.data) {
-      responseText = JSON.stringify(response.data, null, 2);
-    } else {
-      responseText = `Status: ${response.status} ${response.statusText}`;
-    }
+    const responseText = _getResponseText(response, customMessage);
 
     return {
       content: [

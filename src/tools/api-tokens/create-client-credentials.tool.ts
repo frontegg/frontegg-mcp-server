@@ -9,7 +9,6 @@ import {
   HttpMethods,
 } from "../../utils/api/frontegg-api";
 
-// Zod schema for the create-client-credentials tool arguments
 const createClientCredentialsSchema = z
   .object({
     fronteggTenantIdHeader: z
@@ -49,7 +48,6 @@ type CreateClientCredentialsArgs = z.infer<
 // Function to register the create-client-credentials tool
 export function registerCreateClientCredentialsTool(
   server: McpServer,
-  fronteggToken: string | null,
   fronteggBaseUrl: string
 ) {
   server.tool(

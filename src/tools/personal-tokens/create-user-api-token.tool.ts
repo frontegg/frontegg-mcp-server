@@ -31,7 +31,7 @@ type CreateUserApiTokenArgs = z.infer<typeof createUserApiTokenSchema>;
 // Function to register the create-user-api-token tool
 export function registerCreateUserApiTokenTool(
   server: McpServer,
-  fronteggToken: string | null, // Expecting an environment/admin token
+  
   fronteggBaseUrl: string
 ) {
   server.tool(

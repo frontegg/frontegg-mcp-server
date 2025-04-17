@@ -29,7 +29,7 @@ type DeleteUserAccessTokenArgs = z.infer<typeof deleteUserAccessTokenSchema>;
 // Function to register the delete-user-access-token tool
 export function registerDeleteUserAccessTokenTool(
   server: McpServer,
-  fronteggToken: string | null, // Expecting an environment/admin token
+  
   fronteggBaseUrl: string
 ) {
   server.tool(

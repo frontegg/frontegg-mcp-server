@@ -29,7 +29,7 @@ type DeleteUserApiTokenArgs = z.infer<typeof deleteUserApiTokenSchema>;
 // Function to register the delete-user-api-token tool
 export function registerDeleteUserApiTokenTool(
   server: McpServer,
-  fronteggToken: string | null, // Expecting an environment/admin token
+  
   fronteggBaseUrl: string
 ) {
   server.tool(

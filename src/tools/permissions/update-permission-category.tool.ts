@@ -23,8 +23,7 @@ type UpdatePermissionCategoryArgs = z.infer<
 
 export function registerUpdatePermissionCategoryTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "update-permission-category",

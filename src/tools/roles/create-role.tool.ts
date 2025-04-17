@@ -47,7 +47,6 @@ type CreateRoleArgs = z.infer<typeof createRoleSchema>;
 // Function to register the create-role tool
 export function registerCreateRoleTool(
   server: McpServer,
-  fronteggToken: string | null,
   fronteggBaseUrl: string
 ) {
   server.tool(

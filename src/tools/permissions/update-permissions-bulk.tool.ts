@@ -42,8 +42,7 @@ type UpdatePermissionsBulkArgs = z.infer<typeof updatePermissionsBulkSchema>;
 
 export function registerUpdatePermissionsBulkTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "update-permissions-bulk",

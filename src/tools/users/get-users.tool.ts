@@ -67,7 +67,6 @@ type GetUsersV3Args = z.infer<typeof getUsersV3Schema>;
 
 async function handleGetUsersV3(
   params: GetUsersV3Args,
-  fronteggToken: string | null,
   fronteggBaseUrl: string
 ) {
   // Use the V3 endpoint
@@ -101,14 +100,12 @@ async function handleGetUsersV3(
 
 export function registerGetUsersTool(
   server: McpServer,
-  fronteggToken: string | null,
   fronteggBaseUrl: string
 ) {
   server.tool(
-    "get-users", // Keep the original tool name for compatibility?
+    "get-users",
     "Retrieves a list of users using the V3 endpoint based on specified filters and pagination.",
     getUsersV3Schema.shape,
-    (params: GetUsersV3Args) =>
-      handleGetUsersV3(params, fronteggToken, fronteggBaseUrl)
+    (params: GetUsersV3Args) => handleGetUsersV3(params, fronteggBaseUrl)
   );
 }

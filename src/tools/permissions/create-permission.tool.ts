@@ -33,8 +33,7 @@ type CreatePermissionArgs = z.infer<typeof createPermissionSchema>;
 
 export function registerCreatePermissionTool(
   server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
+    fronteggBaseUrl: string
 ) {
   server.tool(
     "create-permission",

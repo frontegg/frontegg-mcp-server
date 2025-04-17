@@ -26,7 +26,7 @@ type GetUserAccessTokensArgs = z.infer<typeof getUserAccessTokensSchema>;
 // Function to register the get-user-access-tokens tool
 export function registerGetUserAccessTokensTool(
   server: McpServer,
-  fronteggToken: string | null, // Expecting an environment/admin token
+  
   fronteggBaseUrl: string
 ) {
   server.tool(
