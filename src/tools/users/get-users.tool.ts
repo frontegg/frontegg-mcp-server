@@ -84,31 +84,19 @@ async function handleGetUsersV3(
   });
 
   // Create headers, including tenant ID if provided
-  const headers = createBaseHeaders(fronteggToken, {
+  const headers = createBaseHeaders({
     fronteggTenantIdHeader: fronteggTenantIdHeader,
   });
 
-  try {
-    const response = await fetchFromFrontegg(
-      HttpMethods.GET,
-      apiUrl,
-      headers,
-      undefined,
-      "get-users-v3" // Renamed log identifier
-    );
+  const response = await fetchFromFrontegg(
+    HttpMethods.GET,
+    apiUrl,
+    headers,
+    undefined,
+    "get-users-v3" // Renamed log identifier
+  );
 
-    return formatToolResponse(response);
-  } catch (error: any) {
-    logger.error(`Error in get-users-v3 tool: ${error.message}`);
-    return formatToolResponse({
-      success: false,
-      status: 500,
-      statusText: "Internal Server Error",
-      data: null,
-      error:
-        error.message || "An unknown error occurred while fetching users (v3)",
-    });
-  }
+  return formatToolResponse(response);
 }
 
 export function registerGetUsersTool(

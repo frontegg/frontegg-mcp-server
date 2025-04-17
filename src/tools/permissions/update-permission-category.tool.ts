@@ -42,7 +42,7 @@ export function registerUpdatePermissionCategoryTool(
       const response = await fetchFromFrontegg(
         HttpMethods.PATCH,
         apiUrl,
-        createBaseHeaders(fronteggToken),
+        createBaseHeaders(),
         updateData,
         "update-permission-category"
       );

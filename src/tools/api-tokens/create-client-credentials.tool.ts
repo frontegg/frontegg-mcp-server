@@ -63,7 +63,7 @@ export function registerCreateClientCredentialsTool(
       );
 
       // Construct Headers
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader: args.fronteggTenantIdHeader,
       });
 

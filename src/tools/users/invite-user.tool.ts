@@ -46,31 +46,19 @@ async function handleInviteUser(
   const { fronteggTenantIdHeader, ...body } = params;
   const endpoint = `${FronteggEndpoints.USERS}/invite`; // Specific invite endpoint
   const apiUrl = buildFronteggUrl(fronteggBaseUrl, endpoint);
-  const headers = createBaseHeaders(fronteggToken, {
+  const headers = createBaseHeaders({
     fronteggTenantIdHeader,
   });
 
-  try {
-    const response = await fetchFromFrontegg(
-      HttpMethods.POST,
-      apiUrl,
-      headers,
-      body, // Send the rest of the params in the body
-      "invite-user"
-    );
+  const response = await fetchFromFrontegg(
+    HttpMethods.POST,
+    apiUrl,
+    headers,
+    body, // Send the rest of the params in the body
+    "invite-user"
+  );
 
-    return formatToolResponse(response);
-  } catch (error: any) {
-    logger.error(`Error in invite-user tool: ${error.message}`);
-    return formatToolResponse({
-      success: false,
-      status: 500,
-      statusText: "Internal Server Error",
-      data: null,
-      error:
-        error.message || "An unknown error occurred while inviting the user",
-    });
-  }
+  return formatToolResponse(response);
 }
 
 export function registerInviteUserTool(

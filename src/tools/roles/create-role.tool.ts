@@ -69,7 +69,7 @@ export function registerCreateRoleTool(
       const response = await fetchFromFrontegg(
         HttpMethods.POST,
         apiUrl,
-        createBaseHeaders(fronteggToken, { fronteggTenantIdHeader }),
+        createBaseHeaders({ fronteggTenantIdHeader }),
         requestBodyArray,
         "create-role"
       );

@@ -46,7 +46,7 @@ export function registerCreateUserApiTokenTool(
       );
 
       // Headers require tenantId and userId
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader: fronteggTenantIdHeader, // Use correct key for tenantId
         userIdHeader: userId, // Pass userId as userIdHeader
       });

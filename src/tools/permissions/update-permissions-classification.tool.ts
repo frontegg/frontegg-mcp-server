@@ -82,7 +82,7 @@ export function registerUpdatePermissionsClassificationTool(
       const response = await fetchFromFrontegg(
         HttpMethods.PUT,
         apiUrl,
-        createBaseHeaders(fronteggToken, { fronteggTenantIdHeader }),
+        createBaseHeaders({ fronteggTenantIdHeader }),
         { classification: classification },
         "update-permissions-classification"
       );

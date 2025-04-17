@@ -12,7 +12,7 @@ import {
 // Zod schema for the get-roles tool arguments, based on OpenAPI spec
 const getRolesSchema = z
   .object({
-    fronteggTenantIdHeader: z.string().optional(), // For the frontegg-tenant-id header
+    tenantId: z.string().optional(), // For the frontegg-tenant-id header
   })
   .strict();
 
@@ -31,8 +31,8 @@ export function registerGetRolesTool(
     async (args: GetRolesArgs) => {
       const apiUrl = buildFronteggUrl(fronteggBaseUrl, FronteggEndpoints.ROLES);
 
-      const headers = createBaseHeaders(fronteggToken, {
-        fronteggTenantIdHeader: args.fronteggTenantIdHeader,
+      const headers = createBaseHeaders({
+        fronteggTenantIdHeader: args.tenantId,
       });
 
       const response = await fetchFromFrontegg(

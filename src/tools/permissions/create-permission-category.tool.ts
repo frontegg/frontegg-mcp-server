@@ -39,7 +39,7 @@ export function registerCreatePermissionCategoryTool(
       const response = await fetchFromFrontegg(
         HttpMethods.POST,
         apiUrl,
-        createBaseHeaders(fronteggToken),
+        createBaseHeaders(),
         args,
         "create-permission-category"
       );

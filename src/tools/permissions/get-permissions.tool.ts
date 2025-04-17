@@ -31,7 +31,7 @@ export function registerGetPermissionsTool(
       const response = await fetchFromFrontegg(
         HttpMethods.GET,
         apiUrl,
-        createBaseHeaders(fronteggToken),
+        createBaseHeaders(),
         undefined,
         "get-permissions"
       );

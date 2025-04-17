@@ -51,7 +51,7 @@ export function registerCreatePermissionTool(
       const response = await fetchFromFrontegg(
         HttpMethods.POST,
         apiUrl,
-        createBaseHeaders(fronteggToken, { fronteggTenantIdHeader }),
+        createBaseHeaders({ fronteggTenantIdHeader }),
         bodyPayload,
         "create-permission"
       );

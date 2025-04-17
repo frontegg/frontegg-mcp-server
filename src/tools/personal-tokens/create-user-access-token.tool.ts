@@ -53,7 +53,7 @@ export function registerCreateUserAccessTokenTool(
       );
 
       // Headers require tenantId and userId
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader: fronteggTenantIdHeader,
         userIdHeader: userId,
       });

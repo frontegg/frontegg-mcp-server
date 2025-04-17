@@ -62,7 +62,7 @@ export function registerUpdatePermissionTool(
       const response = await fetchFromFrontegg(
         HttpMethods.PATCH,
         apiUrl,
-        createBaseHeaders(fronteggToken),
+        createBaseHeaders(),
         updatePayload,
         "update-permission"
       );

@@ -38,7 +38,7 @@ export function registerDeleteTokenTool(
         args.tokenId
       );
 
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader: args.fronteggTenantIdHeader,
       });
 

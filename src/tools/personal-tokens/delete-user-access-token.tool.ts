@@ -45,7 +45,7 @@ export function registerDeleteUserAccessTokenTool(
         id // Pass the token ID as the path parameter
       );
 
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader,
         userIdHeader: userId,
       });

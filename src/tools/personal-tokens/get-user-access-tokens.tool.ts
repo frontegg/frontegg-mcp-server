@@ -40,7 +40,7 @@ export function registerGetUserAccessTokensTool(
         FronteggEndpoints.USER_ACCESS_TOKENS
       );
 
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader,
         userIdHeader: userId,
       });

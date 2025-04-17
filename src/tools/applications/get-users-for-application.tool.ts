@@ -36,7 +36,7 @@ export function registerGetUsersForApplicationTool(
       );
       const apiUrl = buildFronteggUrl(fronteggBaseUrl, endpointPath); // Pass the modified path
 
-      const headers = createBaseHeaders(fronteggToken);
+      const headers = createBaseHeaders();
 
       const response = await fetchFromFrontegg(
         HttpMethods.GET,

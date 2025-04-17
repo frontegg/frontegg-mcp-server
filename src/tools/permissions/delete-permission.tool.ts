@@ -38,7 +38,7 @@ export function registerDeletePermissionTool(
       const response = await fetchFromFrontegg(
         HttpMethods.DELETE,
         apiUrl,
-        createBaseHeaders(fronteggToken),
+        createBaseHeaders(),
         undefined,
         "delete-permission"
       );

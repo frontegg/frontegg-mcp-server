@@ -46,7 +46,7 @@ export function registerDeleteRoleTool(
       const response = await fetchFromFrontegg(
         HttpMethods.DELETE,
         apiUrl,
-        createBaseHeaders(fronteggToken, { fronteggTenantIdHeader }),
+        createBaseHeaders({ fronteggTenantIdHeader }),
         undefined,
         "delete-role"
       );

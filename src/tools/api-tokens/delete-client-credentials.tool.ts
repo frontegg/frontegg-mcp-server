@@ -42,7 +42,7 @@ export function registerDeleteClientCredentialsTool(
         `${FronteggEndpoints.CLIENT_CREDENTIALS_TOKENS}/${tokenId}`
       );
 
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader,
       });
 

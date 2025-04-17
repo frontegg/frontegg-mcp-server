@@ -95,7 +95,7 @@ export function registerUpdateRoleTool(
       const response = await fetchFromFrontegg(
         HttpMethods.PUT,
         apiUrl,
-        createBaseHeaders(fronteggToken, { fronteggTenantIdHeader }),
+        createBaseHeaders({ fronteggTenantIdHeader }),
         requestBody,
         "update-role"
       );

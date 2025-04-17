@@ -44,7 +44,7 @@ export function registerAssignUsersToApplicationTool(
       );
 
       // Use optional headerTenantId for the header, separate from the body tenantId
-      const headers = createBaseHeaders(fronteggToken);
+      const headers = createBaseHeaders();
 
       // Construct the request body
       const body = {

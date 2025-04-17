@@ -48,7 +48,7 @@ export function registerCreateTokenTool(
         FronteggEndpoints.TENANT_ACCESS_TOKENS
       );
 
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader: args.fronteggTenantIdHeader,
       });
 

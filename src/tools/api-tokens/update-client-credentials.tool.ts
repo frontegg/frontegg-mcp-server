@@ -53,7 +53,7 @@ export function registerUpdateClientCredentialsTool(
         args.tokenId
       );
 
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader: args.fronteggTenantIdHeader,
       });
 

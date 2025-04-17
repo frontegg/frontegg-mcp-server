@@ -39,7 +39,6 @@ import {
   registerGetUsersTool,
   registerInviteUserTool,
   registerUpdateUserTool,
-  registerCreateUserTool,
 } from "./users";
 
 // Import application tool registration functions
@@ -47,6 +46,13 @@ import {
   registerGetUsersForApplicationTool,
   registerAssignUsersToApplicationTool,
 } from "./applications";
+
+// Import tenant tool registration functions
+import {
+  registerCreateTenantTool,
+  registerDeleteTenantTool,
+  registerUpdateTenantTool,
+} from "./tenants";
 
 export function registerAllTools(
   server: McpServer,
@@ -93,11 +99,15 @@ export function registerAllTools(
   registerGetUsersTool(server, fronteggToken, fronteggBaseUrl);
   registerInviteUserTool(server, fronteggToken, fronteggBaseUrl);
   registerUpdateUserTool(server, fronteggToken, fronteggBaseUrl);
-  registerCreateUserTool(server, fronteggToken, fronteggBaseUrl);
 
   // Register Application Tools
   registerGetUsersForApplicationTool(server, fronteggToken, fronteggBaseUrl);
   registerAssignUsersToApplicationTool(server, fronteggToken, fronteggBaseUrl);
+
+  // // Register Tenant Tools
+  registerCreateTenantTool(server, fronteggToken, fronteggBaseUrl);
+  registerDeleteTenantTool(server, fronteggToken, fronteggBaseUrl);
+  registerUpdateTenantTool(server, fronteggToken, fronteggBaseUrl);
 
   // Add other tools/resources here by importing and calling their registration functions
 }

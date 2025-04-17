@@ -80,7 +80,7 @@ export function registerUpdatePermissionsBulkTool(
       const response = await fetchFromFrontegg(
         HttpMethods.PUT,
         apiUrl,
-        createBaseHeaders(fronteggToken, { fronteggTenantIdHeader }),
+        createBaseHeaders({ fronteggTenantIdHeader }),
         permissions,
         "update-permissions-bulk"
       );

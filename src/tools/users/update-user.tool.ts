@@ -56,34 +56,22 @@ async function handleUpdateUser(
 
   const endpoint = `${FronteggEndpoints.USERS}/${userId}`;
   const apiUrl = buildFronteggUrl(fronteggBaseUrl, endpoint);
-  const headers = createBaseHeaders(fronteggToken, {
+  const headers = createBaseHeaders({
     fronteggTenantIdHeader,
   });
 
-  try {
-    // Ensure we don't send userId or tenantId in the body
-    const updateBody = { ...body };
+  // Ensure we don't send userId or tenantId in the body
+  const updateBody = { ...body };
 
-    const response = await fetchFromFrontegg(
-      HttpMethods.PUT,
-      apiUrl,
-      headers,
-      updateBody,
-      "update-user"
-    );
+  const response = await fetchFromFrontegg(
+    HttpMethods.PUT,
+    apiUrl,
+    headers,
+    updateBody,
+    "update-user"
+  );
 
-    return formatToolResponse(response);
-  } catch (error: any) {
-    logger.error(`Error in update-user tool for ${userId}: ${error.message}`);
-    return formatToolResponse({
-      success: false,
-      status: 500,
-      statusText: "Internal Server Error",
-      data: null,
-      error:
-        error.message || "An unknown error occurred while updating the user",
-    });
-  }
+  return formatToolResponse(response);
 }
 
 export function registerUpdateUserTool(

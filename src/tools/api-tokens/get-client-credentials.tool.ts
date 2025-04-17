@@ -36,7 +36,7 @@ export function registerGetClientCredentialsTool(
         FronteggEndpoints.CLIENT_CREDENTIALS_TOKENS
       );
 
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader: args.fronteggTenantIdHeader,
       });
 

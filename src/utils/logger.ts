@@ -20,12 +20,6 @@ const pinoLogger = pino(
   transport // Always use the pretty transport
 );
 
-// Remove the old loggingEnabled flag and setLoggingEnabled function
-// let loggingEnabled = false;
-// export const setLoggingEnabled = (enabled: boolean) => {
-//  loggingEnabled = enabled;
-// };
-
 export const logger = {
   log: (message: string, ...args: any[]) => {
     // Map log to info for pino

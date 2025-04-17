@@ -29,41 +29,30 @@ async function handleDeleteUser(
 
   const endpoint = `${FronteggEndpoints.USERS}/${userId}`;
   const apiUrl = buildFronteggUrl(fronteggBaseUrl, endpoint);
-  const headers = createBaseHeaders(fronteggToken, {
+  const headers = createBaseHeaders({
     fronteggTenantIdHeader,
   });
 
-  try {
-    const response = await fetchFromFrontegg(
-      HttpMethods.DELETE,
-      apiUrl,
-      headers,
-      undefined,
-      "delete-user"
-    );
+  const response = await fetchFromFrontegg(
+    HttpMethods.DELETE,
+    apiUrl,
+    headers,
+    undefined,
+    "delete-user"
+  );
 
-    if (response.status === 204) {
-      return formatToolResponse(
-        {
-          success: true,
-          status: 204,
-          statusText: "No Content",
-          data: { message: `User ${userId} deleted successfully.` },
-        },
-        `User ${userId} deleted successfully.`
-      );
-    } else {
-      return formatToolResponse(response);
-    }
-  } catch (error: any) {
-    logger.error(`Error in delete-user tool for ${userId}: ${error.message}`);
-    return formatToolResponse({
-      success: false,
-      status: 500,
-      statusText: "Internal Server Error",
-      data: null,
-      error: error.message || "An unknown error occurred during user deletion",
-    });
+  if (response.status === 204) {
+    return formatToolResponse(
+      {
+        success: true,
+        status: 204,
+        statusText: "No Content",
+        data: { message: `User ${userId} deleted successfully.` },
+      },
+      `User ${userId} deleted successfully.`
+    );
+  } else {
+    return formatToolResponse(response);
   }
 }
 
