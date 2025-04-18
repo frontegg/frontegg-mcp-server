@@ -15,19 +15,13 @@ type GetPermissionCategoriesArgs = z.infer<
   typeof getPermissionCategoriesSchema
 >;
 
-export function registerGetPermissionCategoriesTool(
-  server: McpServer,
-    fronteggBaseUrl: string
-) {
+export function registerGetPermissionCategoriesTool(server: McpServer) {
   server.tool(
     "get-permission-categories",
     "Fetches all permission categories from the Frontegg API.",
     getPermissionCategoriesSchema.shape,
     async (args: GetPermissionCategoriesArgs) => {
-      const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
-        FronteggEndpoints.PERMISSION_CATEGORIES
-      );
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.PERMISSION_CATEGORIES);
 
       const response = await fetchFromFrontegg(
         HttpMethods.GET,

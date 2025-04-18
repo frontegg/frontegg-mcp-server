@@ -21,10 +21,7 @@ type UpdatePermissionCategoryArgs = z.infer<
   typeof updatePermissionCategorySchema
 >;
 
-export function registerUpdatePermissionCategoryTool(
-  server: McpServer,
-    fronteggBaseUrl: string
-) {
+export function registerUpdatePermissionCategoryTool(server: McpServer) {
   server.tool(
     "update-permission-category",
     "Updates an existing permission category in Frontegg.",
@@ -33,7 +30,6 @@ export function registerUpdatePermissionCategoryTool(
       const { categoryId, ...updateData } = args;
 
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.PERMISSION_CATEGORIES,
         categoryId
       );

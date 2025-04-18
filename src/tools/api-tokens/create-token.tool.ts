@@ -33,19 +33,13 @@ const createTokenSchema = z
 type CreateTokenArgs = z.infer<typeof createTokenSchema>;
 
 // Function to register the create-token tool
-export function registerCreateTokenTool(
-  server: McpServer,
-    fronteggBaseUrl: string
-) {
+export function registerCreateTokenTool(server: McpServer) {
   server.tool(
     "create-token",
     "Creates a new tenant access token in Frontegg.",
     createTokenSchema.shape, // Pass the schema shape
     async (args: CreateTokenArgs) => {
-      const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
-        FronteggEndpoints.TENANT_ACCESS_TOKENS
-      );
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.TENANT_ACCESS_TOKENS);
 
       const headers = createBaseHeaders({
         fronteggTenantIdHeader: args.fronteggTenantIdHeader,

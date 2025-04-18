@@ -46,17 +46,13 @@ type CreateClientCredentialsArgs = z.infer<
 >;
 
 // Function to register the create-client-credentials tool
-export function registerCreateClientCredentialsTool(
-  server: McpServer,
-  fronteggBaseUrl: string
-) {
+export function registerCreateClientCredentialsTool(server: McpServer) {
   server.tool(
     "create-client-credentials",
     "Creates a new client credentials token in Frontegg.",
     createClientCredentialsSchema.shape,
     async (args: CreateClientCredentialsArgs) => {
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.CREATE_CLIENT_CREDENTIALS_TOKEN
       );
 

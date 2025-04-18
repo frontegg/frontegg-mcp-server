@@ -19,16 +19,13 @@ const getRolesSchema = z
 type GetRolesArgs = z.infer<typeof getRolesSchema>;
 
 // Function to register the get-roles tool
-export function registerGetRolesTool(
-  server: McpServer,
-  fronteggBaseUrl: string
-) {
+export function registerGetRolesTool(server: McpServer) {
   server.tool(
     "get-roles",
     "Fetches roles from Frontegg API based on provided filters.",
     getRolesSchema.shape, // Pass the schema shape
     async (args: GetRolesArgs) => {
-      const apiUrl = buildFronteggUrl(fronteggBaseUrl, FronteggEndpoints.ROLES);
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.ROLES);
 
       const headers = createBaseHeaders({
         fronteggTenantIdHeader: args.tenantId,

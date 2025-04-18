@@ -24,11 +24,7 @@ const getUserApiTokensSchema = z
 type GetUserApiTokensArgs = z.infer<typeof getUserApiTokensSchema>;
 
 // Function to register the get-user-api-tokens tool
-export function registerGetUserApiTokensTool(
-  server: McpServer,
-  
-  fronteggBaseUrl: string
-) {
+export function registerGetUserApiTokensTool(server: McpServer) {
   server.tool(
     "get-user-api-tokens",
     "Fetches Frontegg user API tokens (client credentials tokens).",
@@ -36,7 +32,6 @@ export function registerGetUserApiTokensTool(
     async (args: GetUserApiTokensArgs) => {
       const { tenantId, userId } = args;
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.USER_API_TOKENS // Using the correct endpoint
       );
 

@@ -19,21 +19,14 @@ const getUsersForApplicationSchema = z
 type GetUsersForApplicationArgs = z.infer<typeof getUsersForApplicationSchema>;
 
 // Function to register the get-users-for-application tool
-export function registerGetUsersForApplicationTool(
-  server: McpServer,
-  fronteggBaseUrl: string
-) {
+export function registerGetUsersForApplicationTool(server: McpServer) {
   server.tool(
     "get-users-for-application",
     "Fetches users assigned to a specific Frontegg application.",
     getUsersForApplicationSchema.shape,
     async (args: GetUsersForApplicationArgs) => {
-      // Manually replace the placeholder in the endpoint path
-      const endpointPath = FronteggEndpoints.GET_USERS_FOR_APPLICATION.replace(
-        "{appId}",
-        encodeURIComponent(args.appId)
-      );
-      const apiUrl = buildFronteggUrl(fronteggBaseUrl, endpointPath); // Pass the modified path
+      const endpointPath = `${FronteggEndpoints.APPLICATION}/${args.appId}/users`;
+      const apiUrl = buildFronteggUrl(endpointPath);
 
       const headers = createBaseHeaders();
 

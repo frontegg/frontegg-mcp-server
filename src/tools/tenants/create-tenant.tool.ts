@@ -68,17 +68,13 @@ const createTenantSchema = z
 type CreateTenantArgs = z.infer<typeof createTenantSchema>;
 
 // Function to register the create-tenant tool
-export function registerCreateTenantTool(
-  server: McpServer,
-  fronteggBaseUrl: string
-) {
+export function registerCreateTenantTool(server: McpServer) {
   server.tool(
     "create-tenant",
     "Creates a new Frontegg tenant account using a vendor token. If an account with the given ID previously existed and was deleted, this action reactivates it.",
     createTenantSchema.shape,
     async (args: CreateTenantArgs) => {
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.TENANTS_V1 // Endpoint for creating tenants
       );
 

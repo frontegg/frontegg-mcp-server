@@ -72,13 +72,10 @@ const createUserV2Schema = z
 
 type CreateUserV2Args = z.infer<typeof createUserV2Schema>;
 
-async function handleCreateUserV2(
-  params: CreateUserV2Args,
-  fronteggBaseUrl: string
-) {
+async function handleCreateUserV2(params: CreateUserV2Args) {
   const { fronteggTenantIdHeader, ...body } = params;
   const endpoint = `${FronteggEndpoints.USERS_V2}`;
-  const apiUrl = buildFronteggUrl(fronteggBaseUrl, endpoint);
+  const apiUrl = buildFronteggUrl(endpoint);
   const headers = createBaseHeaders({
     fronteggTenantIdHeader,
   });
@@ -99,14 +96,11 @@ async function handleCreateUserV2(
   return formatToolResponse(response);
 }
 
-export function registerInviteUserTool(
-  server: McpServer,
-  fronteggBaseUrl: string
-) {
+export function registerInviteUserTool(server: McpServer) {
   server.tool(
     "invite-user",
     "Creates/Invites a new user to a specified tenant using the V2 endpoint, optionally assigning roles and skipping the invite email.",
     createUserV2Schema.shape,
-    (params: CreateUserV2Args) => handleCreateUserV2(params, fronteggBaseUrl)
+    (params: CreateUserV2Args) => handleCreateUserV2(params)
   );
 }

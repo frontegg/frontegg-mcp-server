@@ -28,10 +28,7 @@ const updatePermissionSchema = z
 
 type UpdatePermissionArgs = z.infer<typeof updatePermissionSchema>;
 
-export function registerUpdatePermissionTool(
-  server: McpServer,
-    fronteggBaseUrl: string
-) {
+export function registerUpdatePermissionTool(server: McpServer) {
   server.tool(
     "update-permission",
     "Updates specific fields of a permission in Frontegg using its key.",
@@ -51,11 +48,7 @@ export function registerUpdatePermissionTool(
       }
 
       // Construct URL with the permission key
-      const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
-        FronteggEndpoints.PERMISSIONS,
-        key
-      );
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.PERMISSIONS, key);
       logger.debug("[update-permission] API URL:", { url: apiUrl.toString() });
 
       const response = await fetchFromFrontegg(

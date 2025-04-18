@@ -52,14 +52,11 @@ const updateUserSchema = z
 
 type UpdateUserArgs = z.infer<typeof updateUserSchema>;
 
-async function handleUpdateUser(
-  params: UpdateUserArgs,
-  fronteggBaseUrl: string
-) {
+async function handleUpdateUser(params: UpdateUserArgs) {
   const { userId, fronteggTenantIdHeader, ...body } = params;
 
   const endpoint = FronteggEndpoints.USERS;
-  const apiUrl = buildFronteggUrl(fronteggBaseUrl, endpoint);
+  const apiUrl = buildFronteggUrl(endpoint);
 
   const headers = createBaseHeaders({
     fronteggTenantIdHeader,
@@ -88,14 +85,11 @@ async function handleUpdateUser(
   return formatToolResponse(response);
 }
 
-export function registerUpdateUserTool(
-  server: McpServer,
-  fronteggBaseUrl: string
-) {
+export function registerUpdateUserTool(server: McpServer) {
   server.tool(
     "update-user",
     "Updates the profile information for a specific user using PUT /resources/users/v1. Requires 'frontegg-user-id' and 'frontegg-tenant-id' headers.",
     updateUserSchema.shape,
-    (params: UpdateUserArgs) => handleUpdateUser(params, fronteggBaseUrl)
+    (params: UpdateUserArgs) => handleUpdateUser(params)
   );
 }

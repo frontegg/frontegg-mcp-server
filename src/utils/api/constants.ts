@@ -30,9 +30,7 @@ export const FronteggEndpoints = {
   CREATE_CLIENT_CREDENTIALS_TOKEN: "/identity/resources/tenants/api-tokens/v2",
   USER_ACCESS_TOKENS: "/identity/resources/users/access-tokens/v1",
   USER_API_TOKENS: "/identity/resources/users/api-tokens/v1",
-  GET_USERS_FOR_APPLICATION:
-    "/identity/resources/applications/v1/{appId}/users",
-  ASSIGN_USERS_TO_APPLICATION: "/identity/resources/applications/v1",
+  APPLICATION: "/identity/resources/applications/v1",
   TENANTS_V1: "/tenants/resources/tenants/v1",
   TENANTS_V2: "/tenants/resources/tenants/v2",
 };

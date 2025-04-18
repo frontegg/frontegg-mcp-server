@@ -21,19 +21,13 @@ const getTokensSchema = z
 type GetTokensArgs = z.infer<typeof getTokensSchema>;
 
 // Function to register the get-tokens tool
-export function registerGetTokensTool(
-  server: McpServer,
-    fronteggBaseUrl: string
-) {
+export function registerGetTokensTool(server: McpServer) {
   server.tool(
     "get-tokens",
     "Fetches all tenant access tokens from Frontegg.",
     getTokensSchema.shape, // Pass the schema shape
     async (args: GetTokensArgs) => {
-      const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
-        FronteggEndpoints.TENANT_ACCESS_TOKENS
-      );
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.TENANT_ACCESS_TOKENS);
 
       const headers = createBaseHeaders({
         fronteggTenantIdHeader: args.fronteggTenantIdHeader,

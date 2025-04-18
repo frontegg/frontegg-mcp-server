@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { logger } from "./utils/logger";
-import { getValidToken, fronteggBaseUrl } from "./auth";
+import { getValidToken } from "./auth";
 
 import { registerAllTools } from "./tools/index";
 
@@ -12,10 +12,10 @@ async function main() {
 
   const server = new McpServer({
     name: "Frontegg-MCP-Server",
-    version: "0.1.0",
+    version: "1.0.0",
   });
 
-  registerAllTools(server, fronteggBaseUrl);
+  registerAllTools(server);
 
   const transport = new StdioServerTransport();
 

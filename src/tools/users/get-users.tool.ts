@@ -65,12 +65,9 @@ const getUsersV3Schema = z
 
 type GetUsersV3Args = z.infer<typeof getUsersV3Schema>;
 
-async function handleGetUsersV3(
-  params: GetUsersV3Args,
-  fronteggBaseUrl: string
-) {
+async function handleGetUsersV3(params: GetUsersV3Args) {
   // Use the V3 endpoint
-  const apiUrl = buildFronteggUrl(fronteggBaseUrl, FronteggEndpoints.USERS_V3);
+  const apiUrl = buildFronteggUrl(FronteggEndpoints.USERS_V3);
 
   // Separate header tenantId from query tenantId
   const { fronteggTenantIdHeader, ...queryParams } = params;
@@ -98,14 +95,11 @@ async function handleGetUsersV3(
   return formatToolResponse(response);
 }
 
-export function registerGetUsersTool(
-  server: McpServer,
-  fronteggBaseUrl: string
-) {
+export function registerGetUsersTool(server: McpServer) {
   server.tool(
     "get-users",
     "Retrieves a list of users using the V3 endpoint based on specified filters and pagination.",
     getUsersV3Schema.shape,
-    (params: GetUsersV3Args) => handleGetUsersV3(params, fronteggBaseUrl)
+    (params: GetUsersV3Args) => handleGetUsersV3(params)
   );
 }

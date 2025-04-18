@@ -40,10 +40,7 @@ const updatePermissionsBulkSchema = z
 
 type UpdatePermissionsBulkArgs = z.infer<typeof updatePermissionsBulkSchema>;
 
-export function registerUpdatePermissionsBulkTool(
-  server: McpServer,
-    fronteggBaseUrl: string
-) {
+export function registerUpdatePermissionsBulkTool(server: McpServer) {
   server.tool(
     "update-permissions-bulk",
     "Updates multiple permissions in a single request to Frontegg.",
@@ -65,10 +62,7 @@ export function registerUpdatePermissionsBulkTool(
       }
 
       // Construct URL for bulk permissions update
-      const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
-        FronteggEndpoints.PERMISSIONS
-      );
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.PERMISSIONS);
       logger.debug("[update-permissions-bulk] API URL:", {
         url: apiUrl.toString(),
       });

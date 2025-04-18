@@ -1,7 +1,7 @@
-import { logger } from "../logger"; // Corrected import path
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios"; // Import axios
+import { logger } from "../logger"; // Corrected import path
 import type { ApiResponse, ToolResponseContent } from "./types"; // Import types
-import { getValidToken } from "../../auth"; // Import token management function
+import { fronteggBaseUrl, getValidToken } from "../../auth"; // Import token management function
 export { HttpMethods, FronteggEndpoints } from "./constants"; // Import constants
 
 /**
@@ -46,10 +46,10 @@ export async function fetchFromFrontegg<T = any>(
 
     // Prepare axios request config
     const config: AxiosRequestConfig = {
-      method: method.toUpperCase(), // Axios methods are typically uppercase
+      method,
       url: urlString,
       headers: headers,
-      data: body, // Axios handles JSON stringification automatically for objects
+      data: body,
       validateStatus: () => true, // Handle all statuses in the response logic
     };
 
@@ -90,11 +90,7 @@ export async function fetchFromFrontegg<T = any>(
 /**
  * Builds a complete Frontegg API URL
  */
-export function buildFronteggUrl(
-  fronteggBaseUrl: string,
-  endpoint: string,
-  pathParam?: string
-): URL {
+export function buildFronteggUrl(endpoint: string, pathParam?: string): URL {
   let fullPath = `${fronteggBaseUrl}${endpoint}`;
   if (pathParam) {
     fullPath += `/${encodeURIComponent(pathParam)}`;

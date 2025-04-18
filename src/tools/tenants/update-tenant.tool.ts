@@ -69,10 +69,7 @@ const updateTenantSchema = z
 type UpdateTenantArgs = z.infer<typeof updateTenantSchema>;
 
 // Function to register the update-tenant tool
-export function registerUpdateTenantTool(
-  server: McpServer,
-  fronteggBaseUrl: string
-) {
+export function registerUpdateTenantTool(server: McpServer) {
   server.tool(
     "update-tenant",
     "Updates details for a specific Frontegg tenant account using the V2 endpoint and a vendor token.",
@@ -83,7 +80,6 @@ export function registerUpdateTenantTool(
 
       // Build the URL, including the tenantId as a path parameter using the V2 base
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.TENANTS_V2, // Use the V2 base path
         tenantId // Pass tenantId to be appended to the path
       );

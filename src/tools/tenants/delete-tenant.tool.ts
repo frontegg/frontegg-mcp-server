@@ -22,10 +22,7 @@ const deleteTenantSchema = z
 type DeleteTenantArgs = z.infer<typeof deleteTenantSchema>;
 
 // Function to register the delete-tenant tool
-export function registerDeleteTenantTool(
-  server: McpServer,
-  fronteggBaseUrl: string
-) {
+export function registerDeleteTenantTool(server: McpServer) {
   server.tool(
     "delete-tenant",
     "Deletes a specific Frontegg tenant account by its ID using a vendor token. Note: If an account is part of a hierarchy, its sub-accounts are assigned to the deleted account's parent.",
@@ -33,7 +30,6 @@ export function registerDeleteTenantTool(
     async (args: DeleteTenantArgs) => {
       // Build the URL, including the tenantId as a path parameter
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.TENANTS_V1, // Use the base path
         args.tenantId // Pass tenantId to be appended to the path
       );

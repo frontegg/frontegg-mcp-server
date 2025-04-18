@@ -21,17 +21,13 @@ const getClientCredentialsSchema = z
 type GetClientCredentialsArgs = z.infer<typeof getClientCredentialsSchema>;
 
 // Function to register the get-client-credentials tool
-export function registerGetClientCredentialsTool(
-  server: McpServer,
-    fronteggBaseUrl: string
-) {
+export function registerGetClientCredentialsTool(server: McpServer) {
   server.tool(
     "get-client-credentials",
     "Fetches all client credentials tokens for a tenant from Frontegg.",
     getClientCredentialsSchema.shape,
     async (args: GetClientCredentialsArgs) => {
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.CLIENT_CREDENTIALS_TOKENS
       );
 

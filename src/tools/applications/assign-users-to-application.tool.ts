@@ -28,19 +28,13 @@ type AssignUsersToApplicationArgs = z.infer<
 >;
 
 // Function to register the assign-users-to-application tool
-export function registerAssignUsersToApplicationTool(
-  server: McpServer,
-    fronteggBaseUrl: string
-) {
+export function registerAssignUsersToApplicationTool(server: McpServer) {
   server.tool(
     "assign-users-to-application",
     "Assigns one or more users to a specific Frontegg application within a tenant.",
     assignUsersToApplicationSchema.shape,
     async (args: AssignUsersToApplicationArgs) => {
-      const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
-        FronteggEndpoints.ASSIGN_USERS_TO_APPLICATION
-      );
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.APPLICATION);
 
       // Use optional headerTenantId for the header, separate from the body tenantId
       const headers = createBaseHeaders();

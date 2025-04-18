@@ -20,14 +20,11 @@ const deleteUserSchema = z.object({
 
 type DeleteUserArgs = z.infer<typeof deleteUserSchema>;
 
-async function handleDeleteUser(
-  params: DeleteUserArgs,
-  fronteggBaseUrl: string
-) {
+async function handleDeleteUser(params: DeleteUserArgs) {
   const { userId, fronteggTenantIdHeader } = params;
 
   const endpoint = `${FronteggEndpoints.USERS}/${userId}`;
-  const apiUrl = buildFronteggUrl(fronteggBaseUrl, endpoint);
+  const apiUrl = buildFronteggUrl(endpoint);
   const headers = createBaseHeaders({
     fronteggTenantIdHeader,
   });
@@ -55,14 +52,11 @@ async function handleDeleteUser(
   }
 }
 
-export function registerDeleteUserTool(
-  server: McpServer,
-  fronteggBaseUrl: string
-) {
+export function registerDeleteUserTool(server: McpServer) {
   server.tool(
     "delete-user",
     "Deletes a specific user by their ID.",
     deleteUserSchema.shape,
-    (params: DeleteUserArgs) => handleDeleteUser(params, fronteggBaseUrl)
+    (params: DeleteUserArgs) => handleDeleteUser(params)
   );
 }
