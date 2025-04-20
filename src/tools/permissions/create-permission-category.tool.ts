@@ -21,25 +21,18 @@ type CreatePermissionCategoryArgs = z.infer<
   typeof createPermissionCategorySchema
 >;
 
-export function registerCreatePermissionCategoryTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerCreatePermissionCategoryTool(server: McpServer) {
   server.tool(
     "create-permission-category",
     "Creates a new permission category in Frontegg.",
     createPermissionCategorySchema.shape,
     async (args: CreatePermissionCategoryArgs) => {
-      const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
-        FronteggEndpoints.PERMISSION_CATEGORIES
-      );
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.PERMISSION_CATEGORIES);
 
       const response = await fetchFromFrontegg(
         HttpMethods.POST,
         apiUrl,
-        createBaseHeaders(fronteggToken),
+        createBaseHeaders(),
         args,
         "create-permission-category"
       );

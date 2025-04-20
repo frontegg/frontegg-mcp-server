@@ -10,92 +10,86 @@ import {
   HttpMethods,
 } from "../../utils/api/frontegg-api";
 
-// Schema based on PUT /identity/resources/users/v1/{userId}
 const updateUserSchema = z
   .object({
+    // Headers
     userId: z
       .string()
-      .describe("The unique identifier for the user to update."),
+      .describe(
+        "The user ID identifier (required). Will be sent in the 'frontegg-user-id' header."
+      ),
     fronteggTenantIdHeader: z
       .string()
-      .optional()
-      .describe("Optional Tenant ID context for the request."),
-    name: z.string().optional().describe("The updated name of the user."),
-    email: z
+      .describe(
+        "The tenant ID identifier (required). Will be sent in the 'frontegg-tenant-id' header."
+      ),
+    // Body parameters
+    name: z
       .string()
-      .email()
       .optional()
-      .describe("The updated email address (must be unique)."),
-    phoneNumber: z.string().optional().describe("The updated phone number."),
+      .describe("The updated name of the user (optional)."),
+    phoneNumber: z
+      .string()
+      .optional()
+      .describe("The updated phone number (optional)."),
     profilePictureUrl: z
       .string()
       .url()
+      .max(4095)
       .optional()
-      .describe("The URL to the updated profile picture."),
-    verified: z
-      .boolean()
-      .optional()
-      .describe("Set the user's email verification status."),
+      .nullable()
+      .describe(
+        "The URL to the updated profile picture (optional, max 4095 chars)."
+      ),
     metadata: z
-      .record(z.any())
+      .string()
       .optional()
-      .describe("Replace the user's custom metadata."),
-    // Note: Other fields like 'provider', 'mfaEnrolled', 'isLocked' might be read-only
-    // or require different endpoints/permissions.
+      .describe(
+        "Replace the user's custom metadata (optional, stringified JSON object, e.g., '{}')."
+      ),
   })
   .strict();
 
 type UpdateUserArgs = z.infer<typeof updateUserSchema>;
 
-async function handleUpdateUser(
-  params: UpdateUserArgs,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+async function handleUpdateUser(params: UpdateUserArgs) {
   const { userId, fronteggTenantIdHeader, ...body } = params;
 
-  const endpoint = `${FronteggEndpoints.USERS}/${userId}`;
-  const apiUrl = buildFronteggUrl(fronteggBaseUrl, endpoint);
-  const headers = createBaseHeaders(fronteggToken, {
+  const endpoint = FronteggEndpoints.USERS;
+  const apiUrl = buildFronteggUrl(endpoint);
+
+  const headers = createBaseHeaders({
     fronteggTenantIdHeader,
+    userIdHeader: userId, // Pass userId to the function
   });
 
-  try {
-    // Ensure we don't send userId or tenantId in the body
-    const updateBody = { ...body };
+  const updateBody = { ...body };
 
-    const response = await fetchFromFrontegg(
-      HttpMethods.PUT,
-      apiUrl,
-      headers,
-      updateBody,
-      "update-user"
-    );
+  // Remove properties that are undefined in the body, as the API might interpret them incorrectly
+  Object.keys(updateBody).forEach((key) => {
+    if (updateBody[key as keyof typeof updateBody] === undefined) {
+      delete updateBody[key as keyof typeof updateBody];
+    }
+  });
 
-    return formatToolResponse(response);
-  } catch (error: any) {
-    logger.error(`Error in update-user tool for ${userId}: ${error.message}`);
-    return formatToolResponse({
-      success: false,
-      status: 500,
-      statusText: "Internal Server Error",
-      data: null,
-      error:
-        error.message || "An unknown error occurred while updating the user",
-    });
-  }
+  logger.debug("Update user request body", { updateBody });
+
+  const response = await fetchFromFrontegg(
+    HttpMethods.PUT,
+    apiUrl,
+    headers,
+    updateBody,
+    "update-user"
+  );
+
+  return formatToolResponse(response);
 }
 
-export function registerUpdateUserTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerUpdateUserTool(server: McpServer) {
   server.tool(
     "update-user",
-    "Updates the profile information for a specific user.",
+    "Updates the profile information for a specific user using PUT /resources/users/v1. Requires 'frontegg-user-id' and 'frontegg-tenant-id' headers.",
     updateUserSchema.shape,
-    (params: UpdateUserArgs) =>
-      handleUpdateUser(params, fronteggToken, fronteggBaseUrl)
+    (params: UpdateUserArgs) => handleUpdateUser(params)
   );
 }

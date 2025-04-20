@@ -13,25 +13,18 @@ const getPermissionsSchema = z.object({}).strict();
 
 type GetPermissionsArgs = z.infer<typeof getPermissionsSchema>;
 
-export function registerGetPermissionsTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerGetPermissionsTool(server: McpServer) {
   server.tool(
     "get-permissions",
     "Fetches all permissions from the Frontegg API.",
     getPermissionsSchema.shape,
     async (args: GetPermissionsArgs) => {
-      const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
-        FronteggEndpoints.PERMISSIONS
-      );
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.PERMISSIONS);
 
       const response = await fetchFromFrontegg(
         HttpMethods.GET,
         apiUrl,
-        createBaseHeaders(fronteggToken),
+        createBaseHeaders(),
         undefined,
         "get-permissions"
       );

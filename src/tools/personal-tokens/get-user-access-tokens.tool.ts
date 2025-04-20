@@ -24,23 +24,16 @@ const getUserAccessTokensSchema = z
 type GetUserAccessTokensArgs = z.infer<typeof getUserAccessTokensSchema>;
 
 // Function to register the get-user-access-tokens tool
-export function registerGetUserAccessTokensTool(
-  server: McpServer,
-  fronteggToken: string | null, // Expecting an environment/admin token
-  fronteggBaseUrl: string
-) {
+export function registerGetUserAccessTokensTool(server: McpServer) {
   server.tool(
     "get-user-access-tokens",
     "Fetches Frontegg user access tokens.",
     getUserAccessTokensSchema.shape,
     async (args: GetUserAccessTokensArgs) => {
       const { fronteggTenantIdHeader, userId } = args;
-      const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
-        FronteggEndpoints.USER_ACCESS_TOKENS
-      );
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.USER_ACCESS_TOKENS);
 
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader,
         userIdHeader: userId,
       });

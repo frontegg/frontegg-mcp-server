@@ -22,23 +22,18 @@ const deleteTokenSchema = z
 type DeleteTokenArgs = z.infer<typeof deleteTokenSchema>;
 
 // Function to register the delete-token tool
-export function registerDeleteTokenTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerDeleteTokenTool(server: McpServer) {
   server.tool(
     "delete-token",
     "Deletes a tenant access token from Frontegg.",
     deleteTokenSchema.shape, // Pass the schema shape
     async (args: DeleteTokenArgs) => {
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.TENANT_ACCESS_TOKENS,
         args.tokenId
       );
 
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader: args.fronteggTenantIdHeader,
       });
 

@@ -23,11 +23,7 @@ const deleteRoleSchema = z
 type DeleteRoleArgs = z.infer<typeof deleteRoleSchema>;
 
 // Function to register the delete-role tool
-export function registerDeleteRoleTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerDeleteRoleTool(server: McpServer) {
   server.tool(
     "delete-role",
     "Deletes a specific role by its ID.",
@@ -36,17 +32,13 @@ export function registerDeleteRoleTool(
       const { roleId, fronteggTenantIdHeader } = args;
 
       // Build API URL using centralized utility
-      const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
-        FronteggEndpoints.ROLES,
-        roleId
-      );
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.ROLES, roleId);
 
       // Using centralized fetch utility
       const response = await fetchFromFrontegg(
         HttpMethods.DELETE,
         apiUrl,
-        createBaseHeaders(fronteggToken, { fronteggTenantIdHeader }),
+        createBaseHeaders({ fronteggTenantIdHeader }),
         undefined,
         "delete-role"
       );

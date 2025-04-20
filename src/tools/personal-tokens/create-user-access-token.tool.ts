@@ -35,11 +35,7 @@ const createUserAccessTokenSchema = z
 type CreateUserAccessTokenArgs = z.infer<typeof createUserAccessTokenSchema>;
 
 // Function to register the create-user-access-token tool
-export function registerCreateUserAccessTokenTool(
-  server: McpServer,
-  fronteggToken: string | null, // Expecting an environment/admin token
-  fronteggBaseUrl: string
-) {
+export function registerCreateUserAccessTokenTool(server: McpServer) {
   server.tool(
     "create-user-access-token",
     "Creates a Frontegg user access token.",
@@ -47,13 +43,10 @@ export function registerCreateUserAccessTokenTool(
     async (args: CreateUserAccessTokenArgs) => {
       const { fronteggTenantIdHeader, userId, description, expiresInMinutes } =
         args;
-      const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
-        FronteggEndpoints.USER_ACCESS_TOKENS
-      );
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.USER_ACCESS_TOKENS);
 
       // Headers require tenantId and userId
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader: fronteggTenantIdHeader,
         userIdHeader: userId,
       });

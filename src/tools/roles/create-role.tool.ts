@@ -45,11 +45,7 @@ const createRoleSchema = z
 type CreateRoleArgs = z.infer<typeof createRoleSchema>;
 
 // Function to register the create-role tool
-export function registerCreateRoleTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerCreateRoleTool(server: McpServer) {
   server.tool(
     "create-role",
     "Creates a new role (using v1 API) for a specific Frontegg tenant via header.", // Updated description
@@ -59,7 +55,7 @@ export function registerCreateRoleTool(
       const fronteggTenantIdHeader = args.fronteggTenantIdHeader;
 
       // Build API URL using centralized utility
-      const apiUrl = buildFronteggUrl(fronteggBaseUrl, FronteggEndpoints.ROLES);
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.ROLES);
 
       const { fronteggTenantIdHeader: _fronteggTenantIdHeader, ...roleData } =
         args;
@@ -69,7 +65,7 @@ export function registerCreateRoleTool(
       const response = await fetchFromFrontegg(
         HttpMethods.POST,
         apiUrl,
-        createBaseHeaders(fronteggToken, { fronteggTenantIdHeader }),
+        createBaseHeaders({ fronteggTenantIdHeader }),
         requestBodyArray,
         "create-role"
       );

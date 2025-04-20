@@ -37,23 +37,18 @@ type UpdateClientCredentialsArgs = z.infer<
 >;
 
 // Function to register the update-client-credentials tool
-export function registerUpdateClientCredentialsTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerUpdateClientCredentialsTool(server: McpServer) {
   server.tool(
     "update-client-credentials",
     "Updates a client credentials token in Frontegg.",
     updateClientCredentialsSchema.shape,
     async (args: UpdateClientCredentialsArgs) => {
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.CLIENT_CREDENTIALS_TOKENS,
         args.tokenId
       );
 
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader: args.fronteggTenantIdHeader,
       });
 

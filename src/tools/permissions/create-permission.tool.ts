@@ -31,27 +31,20 @@ const createPermissionSchema = z
 
 type CreatePermissionArgs = z.infer<typeof createPermissionSchema>;
 
-export function registerCreatePermissionTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerCreatePermissionTool(server: McpServer) {
   server.tool(
     "create-permission",
     "Creates a new permission in Frontegg.",
     createPermissionSchema.shape,
     async (args: CreatePermissionArgs) => {
-      const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
-        FronteggEndpoints.PERMISSIONS
-      );
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.PERMISSIONS);
 
       const { fronteggTenantIdHeader, ...bodyPayload } = args;
 
       const response = await fetchFromFrontegg(
         HttpMethods.POST,
         apiUrl,
-        createBaseHeaders(fronteggToken, { fronteggTenantIdHeader }),
+        createBaseHeaders({ fronteggTenantIdHeader }),
         bodyPayload,
         "create-permission"
       );

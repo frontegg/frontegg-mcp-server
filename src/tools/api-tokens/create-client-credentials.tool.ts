@@ -9,7 +9,6 @@ import {
   HttpMethods,
 } from "../../utils/api/frontegg-api";
 
-// Zod schema for the create-client-credentials tool arguments
 const createClientCredentialsSchema = z
   .object({
     fronteggTenantIdHeader: z
@@ -47,23 +46,18 @@ type CreateClientCredentialsArgs = z.infer<
 >;
 
 // Function to register the create-client-credentials tool
-export function registerCreateClientCredentialsTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerCreateClientCredentialsTool(server: McpServer) {
   server.tool(
     "create-client-credentials",
     "Creates a new client credentials token in Frontegg.",
     createClientCredentialsSchema.shape,
     async (args: CreateClientCredentialsArgs) => {
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.CREATE_CLIENT_CREDENTIALS_TOKEN
       );
 
       // Construct Headers
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader: args.fronteggTenantIdHeader,
       });
 

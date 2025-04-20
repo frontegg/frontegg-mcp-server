@@ -19,11 +19,7 @@ type DeletePermissionCategoryArgs = z.infer<
   typeof deletePermissionCategorySchema
 >;
 
-export function registerDeletePermissionCategoryTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerDeletePermissionCategoryTool(server: McpServer) {
   server.tool(
     "delete-permission-category",
     "Deletes a permission category from Frontegg.",
@@ -32,7 +28,6 @@ export function registerDeletePermissionCategoryTool(
       const { categoryId } = args;
 
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.PERMISSION_CATEGORIES,
         categoryId
       );
@@ -40,7 +35,7 @@ export function registerDeletePermissionCategoryTool(
       const response = await fetchFromFrontegg(
         HttpMethods.DELETE,
         apiUrl,
-        createBaseHeaders(fronteggToken),
+        createBaseHeaders(),
         undefined,
         "delete-permission-category"
       );

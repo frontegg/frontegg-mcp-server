@@ -39,7 +39,6 @@ import {
   registerGetUsersTool,
   registerInviteUserTool,
   registerUpdateUserTool,
-  registerCreateUserTool,
 } from "./users";
 
 // Import application tool registration functions
@@ -48,56 +47,59 @@ import {
   registerAssignUsersToApplicationTool,
 } from "./applications";
 
-export function registerAllTools(
-  server: McpServer,
-  fronteggToken: string,
-  fronteggBaseUrl: string
-): void {
+// Import tenant tool registration functions
+import {
+  registerCreateTenantTool,
+  registerDeleteTenantTool,
+  registerUpdateTenantTool,
+} from "./tenants";
+
+export function registerAllTools(server: McpServer): void {
   // Register Role Tools
-  registerGetRolesTool(server, fronteggToken, fronteggBaseUrl);
-  registerCreateRoleTool(server, fronteggToken, fronteggBaseUrl);
-  registerDeleteRoleTool(server, fronteggToken, fronteggBaseUrl);
-  registerUpdateRoleTool(server, fronteggToken, fronteggBaseUrl);
+  registerGetRolesTool(server);
+  registerCreateRoleTool(server);
+  registerDeleteRoleTool(server);
+  registerUpdateRoleTool(server);
 
   // Register Permission Tools
-  registerGetPermissionsTool(server, fronteggToken, fronteggBaseUrl);
-  registerCreatePermissionTool(server, fronteggToken, fronteggBaseUrl);
-  registerDeletePermissionTool(server, fronteggToken, fronteggBaseUrl);
-  registerUpdatePermissionTool(server, fronteggToken, fronteggBaseUrl);
-  registerUpdatePermissionsBulkTool(server, fronteggToken, fronteggBaseUrl);
-  registerUpdatePermissionsClassificationTool(
-    server,
-    fronteggToken,
-    fronteggBaseUrl
-  );
+  registerGetPermissionsTool(server);
+  registerCreatePermissionTool(server);
+  registerDeletePermissionTool(server);
+  registerUpdatePermissionTool(server);
+  registerUpdatePermissionsBulkTool(server);
+  registerUpdatePermissionsClassificationTool(server);
 
   // Register Permission Category Tools
-  registerGetPermissionCategoriesTool(server, fronteggToken, fronteggBaseUrl);
-  registerCreatePermissionCategoryTool(server, fronteggToken, fronteggBaseUrl);
-  registerUpdatePermissionCategoryTool(server, fronteggToken, fronteggBaseUrl);
-  registerDeletePermissionCategoryTool(server, fronteggToken, fronteggBaseUrl);
+  registerGetPermissionCategoriesTool(server);
+  registerCreatePermissionCategoryTool(server);
+  registerUpdatePermissionCategoryTool(server);
+  registerDeletePermissionCategoryTool(server);
 
   //   // Register API Token Tools
-  registerCreateTokenTool(server, fronteggToken, fronteggBaseUrl);
-  registerGetTokensTool(server, fronteggToken, fronteggBaseUrl);
-  registerDeleteTokenTool(server, fronteggToken, fronteggBaseUrl);
+  registerCreateTokenTool(server);
+  registerGetTokensTool(server);
+  registerDeleteTokenTool(server);
 
   // Register Client Credentials Token Tools
-  registerGetClientCredentialsTool(server, fronteggToken, fronteggBaseUrl);
-  registerDeleteClientCredentialsTool(server, fronteggToken, fronteggBaseUrl);
-  registerUpdateClientCredentialsTool(server, fronteggToken, fronteggBaseUrl);
-  registerCreateClientCredentialsTool(server, fronteggToken, fronteggBaseUrl);
+  registerGetClientCredentialsTool(server);
+  registerDeleteClientCredentialsTool(server);
+  registerUpdateClientCredentialsTool(server);
+  registerCreateClientCredentialsTool(server);
 
   // Register User Tools
-  registerDeleteUserTool(server, fronteggToken, fronteggBaseUrl);
-  registerGetUsersTool(server, fronteggToken, fronteggBaseUrl);
-  registerInviteUserTool(server, fronteggToken, fronteggBaseUrl);
-  registerUpdateUserTool(server, fronteggToken, fronteggBaseUrl);
-  registerCreateUserTool(server, fronteggToken, fronteggBaseUrl);
+  registerDeleteUserTool(server);
+  registerGetUsersTool(server);
+  registerInviteUserTool(server);
+  registerUpdateUserTool(server);
 
   // Register Application Tools
-  registerGetUsersForApplicationTool(server, fronteggToken, fronteggBaseUrl);
-  registerAssignUsersToApplicationTool(server, fronteggToken, fronteggBaseUrl);
+  registerGetUsersForApplicationTool(server);
+  registerAssignUsersToApplicationTool(server);
+
+  // // Register Tenant Tools
+  registerCreateTenantTool(server);
+  registerDeleteTenantTool(server);
+  registerUpdateTenantTool(server);
 
   // Add other tools/resources here by importing and calling their registration functions
 }

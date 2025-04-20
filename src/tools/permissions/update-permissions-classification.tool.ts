@@ -42,11 +42,7 @@ type UpdatePermissionsClassificationArgs = z.infer<
   typeof updatePermissionsClassificationSchema
 >;
 
-export function registerUpdatePermissionsClassificationTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerUpdatePermissionsClassificationTool(server: McpServer) {
   server.tool(
     "update-permissions-classification",
     "Updates permission classifications in Frontegg API.",
@@ -69,7 +65,6 @@ export function registerUpdatePermissionsClassificationTool(
 
       // Construct URL for permissions classification update
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.PERMISSIONS_CLASSIFICATION
       );
       logger.debug("[update-permissions-classification] API URL:", {
@@ -82,7 +77,7 @@ export function registerUpdatePermissionsClassificationTool(
       const response = await fetchFromFrontegg(
         HttpMethods.PUT,
         apiUrl,
-        createBaseHeaders(fronteggToken, { fronteggTenantIdHeader }),
+        createBaseHeaders({ fronteggTenantIdHeader }),
         { classification: classification },
         "update-permissions-classification"
       );

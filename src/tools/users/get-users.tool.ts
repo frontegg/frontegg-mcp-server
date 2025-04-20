@@ -65,13 +65,9 @@ const getUsersV3Schema = z
 
 type GetUsersV3Args = z.infer<typeof getUsersV3Schema>;
 
-async function handleGetUsersV3(
-  params: GetUsersV3Args,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+async function handleGetUsersV3(params: GetUsersV3Args) {
   // Use the V3 endpoint
-  const apiUrl = buildFronteggUrl(fronteggBaseUrl, FronteggEndpoints.USERS_V3);
+  const apiUrl = buildFronteggUrl(FronteggEndpoints.USERS_V3);
 
   // Separate header tenantId from query tenantId
   const { fronteggTenantIdHeader, ...queryParams } = params;
@@ -84,43 +80,26 @@ async function handleGetUsersV3(
   });
 
   // Create headers, including tenant ID if provided
-  const headers = createBaseHeaders(fronteggToken, {
+  const headers = createBaseHeaders({
     fronteggTenantIdHeader: fronteggTenantIdHeader,
   });
 
-  try {
-    const response = await fetchFromFrontegg(
-      HttpMethods.GET,
-      apiUrl,
-      headers,
-      undefined,
-      "get-users-v3" // Renamed log identifier
-    );
+  const response = await fetchFromFrontegg(
+    HttpMethods.GET,
+    apiUrl,
+    headers,
+    undefined,
+    "get-users-v3" // Renamed log identifier
+  );
 
-    return formatToolResponse(response);
-  } catch (error: any) {
-    logger.error(`Error in get-users-v3 tool: ${error.message}`);
-    return formatToolResponse({
-      success: false,
-      status: 500,
-      statusText: "Internal Server Error",
-      data: null,
-      error:
-        error.message || "An unknown error occurred while fetching users (v3)",
-    });
-  }
+  return formatToolResponse(response);
 }
 
-export function registerGetUsersTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerGetUsersTool(server: McpServer) {
   server.tool(
-    "get-users", // Keep the original tool name for compatibility?
+    "get-users",
     "Retrieves a list of users using the V3 endpoint based on specified filters and pagination.",
     getUsersV3Schema.shape,
-    (params: GetUsersV3Args) =>
-      handleGetUsersV3(params, fronteggToken, fronteggBaseUrl)
+    (params: GetUsersV3Args) => handleGetUsersV3(params)
   );
 }

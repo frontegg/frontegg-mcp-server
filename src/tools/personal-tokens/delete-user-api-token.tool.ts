@@ -27,11 +27,7 @@ const deleteUserApiTokenSchema = z
 type DeleteUserApiTokenArgs = z.infer<typeof deleteUserApiTokenSchema>;
 
 // Function to register the delete-user-api-token tool
-export function registerDeleteUserApiTokenTool(
-  server: McpServer,
-  fronteggToken: string | null, // Expecting an environment/admin token
-  fronteggBaseUrl: string
-) {
+export function registerDeleteUserApiTokenTool(server: McpServer) {
   server.tool(
     "delete-user-api-token",
     "Deletes a specific Frontegg user API token (client credentials token) by its ID.",
@@ -40,12 +36,11 @@ export function registerDeleteUserApiTokenTool(
       const { fronteggTenantIdHeader, userId, id } = args;
       // The token ID is a path parameter
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.USER_API_TOKENS, // Using the correct endpoint
         id // Pass the token ID as the path parameter
       );
 
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader,
         userIdHeader: userId,
       });

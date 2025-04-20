@@ -27,11 +27,7 @@ const deleteUserAccessTokenSchema = z
 type DeleteUserAccessTokenArgs = z.infer<typeof deleteUserAccessTokenSchema>;
 
 // Function to register the delete-user-access-token tool
-export function registerDeleteUserAccessTokenTool(
-  server: McpServer,
-  fronteggToken: string | null, // Expecting an environment/admin token
-  fronteggBaseUrl: string
-) {
+export function registerDeleteUserAccessTokenTool(server: McpServer) {
   server.tool(
     "delete-user-access-token",
     "Deletes a specific Frontegg user access token by its ID.",
@@ -40,12 +36,11 @@ export function registerDeleteUserAccessTokenTool(
       const { fronteggTenantIdHeader, userId, id } = args;
       // The token ID is a path parameter
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.USER_ACCESS_TOKENS,
         id // Pass the token ID as the path parameter
       );
 
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader,
         userIdHeader: userId,
       });

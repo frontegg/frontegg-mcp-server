@@ -29,11 +29,7 @@ const createUserApiTokenSchema = z
 type CreateUserApiTokenArgs = z.infer<typeof createUserApiTokenSchema>;
 
 // Function to register the create-user-api-token tool
-export function registerCreateUserApiTokenTool(
-  server: McpServer,
-  fronteggToken: string | null, // Expecting an environment/admin token
-  fronteggBaseUrl: string
-) {
+export function registerCreateUserApiTokenTool(server: McpServer) {
   server.tool(
     "create-user-api-token",
     "Creates a Frontegg user API token (client credentials token).",
@@ -41,12 +37,11 @@ export function registerCreateUserApiTokenTool(
     async (args: CreateUserApiTokenArgs) => {
       const { fronteggTenantIdHeader, userId, description } = args;
       const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
         FronteggEndpoints.USER_API_TOKENS // Using the correct endpoint
       );
 
       // Headers require tenantId and userId
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader: fronteggTenantIdHeader, // Use correct key for tenantId
         userIdHeader: userId, // Pass userId as userIdHeader
       });

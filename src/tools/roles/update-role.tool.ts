@@ -46,11 +46,7 @@ const updateRoleSchema = z
 type UpdateRoleArgs = z.infer<typeof updateRoleSchema>;
 
 // Function to register the update-role tool
-export function registerUpdateRoleTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerUpdateRoleTool(server: McpServer) {
   server.tool(
     "update-role",
     "Updates an existing role by its ID using a PATCH request.",
@@ -85,17 +81,13 @@ export function registerUpdateRoleTool(
       }
 
       // Build API URL using centralized utility
-      const apiUrl = buildFronteggUrl(
-        fronteggBaseUrl,
-        FronteggEndpoints.ROLES,
-        roleId
-      );
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.ROLES, roleId);
 
       // Using centralized fetch utility
       const response = await fetchFromFrontegg(
         HttpMethods.PUT,
         apiUrl,
-        createBaseHeaders(fronteggToken, { fronteggTenantIdHeader }),
+        createBaseHeaders({ fronteggTenantIdHeader }),
         requestBody,
         "update-role"
       );

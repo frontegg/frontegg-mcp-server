@@ -1,35 +1,26 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { logger } from "./utils/logger";
+import { getValidToken } from "./auth";
 
-import {
-  authenticateFrontegg,
-  getFronteggToken,
-  fronteggBaseUrl,
-} from "./auth/fronteggAuth";
-
-// Import the consolidated tool registration function
 import { registerAllTools } from "./tools/index";
 
 async function main() {
-  await authenticateFrontegg();
+  await getValidToken();
 
-  const token = getFronteggToken();
-  if (!token) {
-    logger.error("Failed to obtain Frontegg token. Exiting.");
-    process.exit(1);
-  }
+  logger.info("Starting Frontegg MCP Server...");
 
   const server = new McpServer({
     name: "Frontegg-MCP-Server",
-    version: "0.1.0",
+    version: "1.0.0",
   });
 
-  registerAllTools(server, token, fronteggBaseUrl);
+  registerAllTools(server);
 
   const transport = new StdioServerTransport();
 
   await server.connect(transport);
+  logger.info("Frontegg MCP Server started successfully.");
 }
 
 main().catch((error) => {

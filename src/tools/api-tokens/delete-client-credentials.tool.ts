@@ -24,11 +24,7 @@ type DeleteClientCredentialsArgs = z.infer<
 >;
 
 // Function to register the delete-client-credentials tool
-export function registerDeleteClientCredentialsTool(
-  server: McpServer,
-  fronteggToken: string | null,
-  fronteggBaseUrl: string
-) {
+export function registerDeleteClientCredentialsTool(server: McpServer) {
   server.tool(
     "delete-client-credentials",
     "Deletes a client credentials token from Frontegg.",
@@ -38,11 +34,10 @@ export function registerDeleteClientCredentialsTool(
 
       // Construct URL
       const url = buildFronteggUrl(
-        fronteggBaseUrl,
         `${FronteggEndpoints.CLIENT_CREDENTIALS_TOKENS}/${tokenId}`
       );
 
-      const headers = createBaseHeaders(fronteggToken, {
+      const headers = createBaseHeaders({
         fronteggTenantIdHeader,
       });
 
