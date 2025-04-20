@@ -71,6 +71,9 @@ export async function getValidToken(): Promise<string> {
     return tokenCache.token;
   }
 
-  logger.info("Frontegg token expired or about to expire, refreshing...");
+  if (tokenCache) {
+    logger.info("Frontegg token expired or about to expire, refreshing...");
+  }
+
   return authenticateFrontegg();
 }

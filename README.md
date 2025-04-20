@@ -104,6 +104,36 @@ To apply the changes:
 
 This will start the server, which listens for MCP connections via standard input/output (stdio).
 
+## Running as an HTTP Server
+
+Alternatively, you can run the server in HTTP mode. This mode exposes an HTTP endpoint (`/mcp`) that MCP clients can connect to over the network.
+
+1.  Build the project (if not already done):
+    ```bash
+    npm run build
+    ```
+2.  Start the HTTP server:
+    ```bash
+    npm run start:http
+    ```
+    By default, the server listens on port 3000. You can change the port using the `PORT` environment variable or the `--port` command-line argument:
+    ```bash
+    PORT=8080 npm run start:http
+    # or
+    npm run start:http -- --port 8080
+    ```
+    _(Note the extra `--` before `--port` when using npm scripts)._
+
+### Configuring Clients for HTTP Mode
+
+When running in HTTP mode, clients like Claude Desktop need to connect to the server's URL (e.g., `http://localhost:3000/mcp`).
+
+**Important:** The Claude Desktop configuration example provided earlier (`claude_desktop_config.json`) is for the **stdio** server. Configuring Claude Desktop (or other clients) to connect to an HTTP MCP server might require a different configuration structure (e.g., using a `url` field instead of `command`/`args`).
+
+Consult your MCP client's documentation for instructions on connecting to an MCP server via an HTTP endpoint. You will typically need to provide the base URL where the server is listening (e.g., `http://localhost:3000`). The client will usually append `/mcp` automatically.
+
+If direct URL configuration is not supported by your client, you may need to run the HTTP server manually in a separate terminal and then configure the client accordingly, if possible.
+
 ## Model Context Protocol (MCP) Integration
 
 This application acts as an MCP server (`@modelcontextprotocol/sdk/server`). It registers tools (defined in `./src/tools/`) that can be invoked by an MCP client (like an AI model or development tool).
