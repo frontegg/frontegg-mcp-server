@@ -91,6 +91,32 @@ To apply the changes:
 2. Relaunch Claude Desktop
 3. Check for the 🔌 icon to confirm the Frontegg server is connected
 
+### 5. Configure Cursor to recognize the Frontegg MCP server
+
+Create a project-level `.cursor/mcp.json` file in the root of your project with the following content:
+
+```json
+{
+  "mcpServers": {
+    "frontegg": {
+      "command": "node",
+      "args": ["./build/index.js"],
+      "env": {
+        "FRONTEGG_CLIENT_ID": "your_client_id",
+        "FRONTEGG_API_KEY": "your_api_key"
+        // FRONTEGG_BASE_URL is optional and defaults to https://api.frontegg.com
+      }
+    }
+  }
+}
+```
+
+Replace `your_client_id`, `your_api_key`, and ensure the path to `index.js` is correct for your project.
+
+Alternatively, configure Cursor globally by creating `~/.cursor/mcp.json` with the same content.
+
+After saving the file, restart Cursor or reload the project to pick up the new MCP server configuration.
+
 ## Running the Server
 
 1.  Build the project:
