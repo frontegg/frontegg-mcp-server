@@ -27,7 +27,9 @@ This project implements a Model Context Protocol (MCP) server that interacts wit
 
 This server requires authentication with Frontegg. You need to set up proper configuration to connect your MCP server with Frontegg's API.
 
-### 1. Configure your environment variables
+First, ensure you have your Frontegg credentials available.
+
+### Configure your environment variables
 
 Create a `.env` file in the root directory with your Frontegg credentials:
 
@@ -40,82 +42,82 @@ FRONTEGG_API_KEY=your_api_key
 
 Replace `your_client_id` and `your_api_key` with your actual Frontegg credentials from your Frontegg account settings.
 
-### 2. Configure Claude Desktop to recognize the Frontegg MCP server
+### How to use with Claude Desktop
 
-If you're using Claude Desktop, you'll need to configure it to recognize and connect to your Frontegg MCP server.
+1.  **Locate Claude Desktop Config File**
 
-To locate the `claude_desktop_config.json` file:
+    To locate the `claude_desktop_config.json` file:
 
-1. Open the Claude Desktop app and enable Developer Mode from the top-left menu bar
-2. Go to Settings, navigate to the Developer section, and click the Edit Config button to access `claude_desktop_config.json`
+    - Open the Claude Desktop app and enable Developer Mode from the top-left menu bar.
+    - Go to Settings, navigate to the Developer section, and click the Edit Config button.
 
-Alternatively, you can open the configuration file directly:
+    Alternatively, open the file directly:
 
-#### On macOS:
+    - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+    - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
-```bash
-code ~/Library/Application\ Support/Claude/claude_desktop_config.json
-```
+2.  **Add Server Configuration**
 
-#### On Windows:
+    Add the following to the `mcpServers` section in `claude_desktop_config.json`:
 
-```bash
-code %APPDATA%\Claude\claude_desktop_config.json
-```
-
-### 3. Add the Frontegg server configuration to Claude Desktop:
-
-```json
-{
-  "mcpServers": {
-    "frontegg": {
-      "command": "node",
-      "args": ["/path/to/frontegg-mcp-server/build/index.js"],
-      "env": {
-        "FRONTEGG_CLIENT_ID": "your_client_id",
-        "FRONTEGG_API_KEY": "your_api_key"
-        // FRONTEGG_BASE_URL is optional and defaults to https://api.frontegg.com
+    ```json
+    {
+      "mcpServers": {
+        "frontegg": {
+          "command": "node",
+          "args": ["/path/to/frontegg-mcp-server/build/index.js"],
+          "env": {
+            "FRONTEGG_CLIENT_ID": "your_client_id",
+            "FRONTEGG_API_KEY": "your_api_key"
+            // FRONTEGG_BASE_URL is optional and defaults to https://api.frontegg.com
+          }
+        }
       }
     }
-  }
-}
-```
+    ```
 
-Replace `/path/to/frontegg-mcp-server` with the absolute path to your project directory, and add your actual Frontegg credentials.
+    Replace `/path/to/frontegg-mcp-server` with the absolute path to your project directory, and fill in your credentials.
 
-### 4. Restart Claude Desktop
+3.  **Restart Claude Desktop**
 
-To apply the changes:
+    - Fully quit Claude Desktop.
+    - Relaunch Claude Desktop.
+    - Check for the 🔌 icon to confirm the server connection.
 
-1. Fully quit Claude Desktop (ensure it's not just minimized)
-2. Relaunch Claude Desktop
-3. Check for the 🔌 icon to confirm the Frontegg server is connected
+### How to use with Cursor AI
 
-### 5. Configure Cursor to recognize the Frontegg MCP server
+1.  **Create MCP Configuration File**
 
-Create a project-level `.cursor/mcp.json` file in the root of your project with the following content:
+    You can configure Cursor per-project or globally.
 
-```json
-{
-  "mcpServers": {
-    "frontegg": {
-      "command": "node",
-      "args": ["./build/index.js"],
-      "env": {
-        "FRONTEGG_CLIENT_ID": "your_client_id",
-        "FRONTEGG_API_KEY": "your_api_key"
-        // FRONTEGG_BASE_URL is optional and defaults to https://api.frontegg.com
+    - **Project-level**: Create a `.cursor/mcp.json` file in the root of this project.
+    - **Global**: Create a `~/.cursor/mcp.json` file in your home directory.
+
+2.  **Add Server Configuration**
+
+    Add the following content to your chosen `mcp.json` file:
+
+    ```json
+    {
+      "mcpServers": {
+        "frontegg": {
+          "command": "node",
+          "args": ["./build/index.js"],
+          "env": {
+            "FRONTEGG_CLIENT_ID": "your_client_id",
+            "FRONTEGG_API_KEY": "your_api_key"
+            // FRONTEGG_BASE_URL is optional and defaults to https://api.frontegg.com
+          }
+        }
       }
     }
-  }
-}
-```
+    ```
 
-Replace `your_client_id`, `your_api_key`, and ensure the path to `index.js` is correct for your project.
+    Replace `your_client_id`, `your_api_key`. If using the global configuration, ensure the path in `args` points to the correct location of `build/index.js` (e.g., use an absolute path).
 
-Alternatively, configure Cursor globally by creating `~/.cursor/mcp.json` with the same content.
+3.  **Restart/Reload Cursor**
 
-After saving the file, restart Cursor or reload the project to pick up the new MCP server configuration.
+    After saving the file, restart Cursor or reload the project/window to activate the MCP server.
 
 ## Running the Server
 
