@@ -45,6 +45,7 @@ import {
 import {
   registerGetUsersForApplicationTool,
   registerAssignUsersToApplicationTool,
+  registerGetApplicationsTool,
 } from "./applications";
 
 // Import tenant tool registration functions
@@ -95,6 +96,7 @@ export function registerAllTools(server: McpServer): void {
   // Register Application Tools
   registerGetUsersForApplicationTool(server);
   registerAssignUsersToApplicationTool(server);
+  registerGetApplicationsTool(server);
 
   // // Register Tenant Tools
   registerCreateTenantTool(server);

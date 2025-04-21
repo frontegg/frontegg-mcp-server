@@ -25,7 +25,7 @@ export function registerGetUsersForApplicationTool(server: McpServer) {
     "Fetches users assigned to a specific Frontegg application.",
     getUsersForApplicationSchema.shape,
     async (args: GetUsersForApplicationArgs) => {
-      const endpointPath = `${FronteggEndpoints.APPLICATION}/${args.appId}/users`;
+      const endpointPath = `${FronteggEndpoints.IDENTITY_APPLICATION}/${args.appId}/users`;
       const apiUrl = buildFronteggUrl(endpointPath);
 
       const headers = createBaseHeaders();

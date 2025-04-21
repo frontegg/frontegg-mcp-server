@@ -34,7 +34,7 @@ export function registerAssignUsersToApplicationTool(server: McpServer) {
     "Assigns one or more users to a specific Frontegg application within a tenant.",
     assignUsersToApplicationSchema.shape,
     async (args: AssignUsersToApplicationArgs) => {
-      const apiUrl = buildFronteggUrl(FronteggEndpoints.APPLICATION);
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.IDENTITY_APPLICATION);
 
       // Use optional headerTenantId for the header, separate from the body tenantId
       const headers = createBaseHeaders();
