@@ -42,6 +42,19 @@ FRONTEGG_API_KEY=your_api_key
 
 Replace `your_client_id` and `your_api_key` with your actual Frontegg credentials from your Frontegg account settings.
 
+## Running the Server
+
+1.  Build the project:
+    ```bash
+    npm run build
+    ```
+2.  Start the MCP server:
+    ```bash
+    npm start
+    ```
+
+This will start the server, which listens for MCP connections via standard input/output (stdio).
+
 ### How to use with Claude Desktop
 
 1.  **Locate Claude Desktop Config File**
@@ -169,16 +182,6 @@ This application acts as an MCP server (`@modelcontextprotocol/sdk/server`). It 
 The server uses `@modelcontextprotocol/sdk/server/stdio` for communication, meaning it expects MCP messages via stdin and sends responses via stdout.
 
 To interact with this server using an MCP client, configure the client to launch the `frontegg-mcp-server` executable (or run `npm start` or `node build/index.js` in the project directory).
-
-### Using with MCP Inspector
-
-You can use the MCP Inspector tool to test and debug the server:
-
-```bash
-npm run inspector
-```
-
-This will start the server and open the MCP Inspector UI, allowing you to send requests and view responses.
 
 ## Tools
 
