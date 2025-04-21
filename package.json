@@ -11,8 +11,7 @@
     "build": "rm -rf build && tsc && node -e \"require('fs').readdirSync('build').filter(f=>f.endsWith('.js')).forEach(f=>require('fs').chmodSync('build/'+f,'755'))\"",
     "prepare": "npm run build",
     "start": "node build/index.js",
-    "start:http": "node build/http-server.js",
-    "inspector": "npx @modelcontextprotocol/inspector node build/index.js"
+    "start:http": "node build/http-server.js"
   },
   "keywords": [],
   "author": "",
