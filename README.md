@@ -220,6 +220,7 @@ This server provides the following tools to interact with the Frontegg API:
 4.  `update_permission`: Updates an existing permission.
 5.  `update_permissions_bulk`: Updates multiple permissions in a single request.
 6.  `update_permissions_classification`: Updates permission classifications.
+7.  `set_permissions_to_role`: Assigns permissions to a role, replacing any existing permissions.
 
 **Permission Categories**
 

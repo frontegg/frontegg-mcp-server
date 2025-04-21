@@ -6,6 +6,7 @@ import {
   registerGetRolesTool,
   registerDeleteRoleTool,
   registerUpdateRoleTool,
+  registerSetPermissionsToRoleTool,
 } from "./roles";
 
 // Import permission tool registration functions
@@ -61,6 +62,7 @@ export function registerAllTools(server: McpServer): void {
   registerCreateRoleTool(server);
   registerDeleteRoleTool(server);
   registerUpdateRoleTool(server);
+  registerSetPermissionsToRoleTool(server);
 
   // Register Permission Tools
   registerGetPermissionsTool(server);

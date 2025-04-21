@@ -85,7 +85,7 @@ export function registerUpdateRoleTool(server: McpServer) {
 
       // Using centralized fetch utility
       const response = await fetchFromFrontegg(
-        HttpMethods.PUT,
+        HttpMethods.PATCH,
         apiUrl,
         createBaseHeaders({ fronteggTenantIdHeader }),
         requestBody,
