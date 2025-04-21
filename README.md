@@ -191,6 +191,7 @@ This server provides the following tools to interact with the Frontegg API:
 
 1.  `get_users_for_application`: Retrieves users assigned to a specific application.
 2.  `assign_users_to_application`: Assigns users to a specific application.
+3.  `get_applications`: Fetches Frontegg applications with optional filters.
 
 **API Tokens**
 
