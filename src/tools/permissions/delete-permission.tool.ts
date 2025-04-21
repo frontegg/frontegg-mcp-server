@@ -9,10 +9,12 @@ import {
   HttpMethods,
 } from "../../utils/api/frontegg-api";
 
-// Zod schema assuming 'key' is the path parameter for deleting a permission
+// Zod schema using 'permissionId' as the path parameter
 const deletePermissionSchema = z
   .object({
-    key: z.string().describe("The unique key of the permission to delete."),
+    permissionId: z
+      .string()
+      .describe("The unique ID of the permission to delete."),
   })
   .strict();
 
@@ -21,11 +23,14 @@ type DeletePermissionArgs = z.infer<typeof deletePermissionSchema>;
 export function registerDeletePermissionTool(server: McpServer) {
   server.tool(
     "delete-permission",
-    "Deletes a specific permission in Frontegg using its key.",
+    "Deletes a specific permission in Frontegg using its ID.",
     deletePermissionSchema.shape,
     async (args: DeletePermissionArgs) => {
-      // Construct URL with the permission key
-      const apiUrl = buildFronteggUrl(FronteggEndpoints.PERMISSIONS, args.key);
+      // Construct URL with the permission ID
+      const apiUrl = buildFronteggUrl(
+        FronteggEndpoints.PERMISSIONS,
+        args.permissionId
+      );
 
       const response = await fetchFromFrontegg(
         HttpMethods.DELETE,
@@ -37,7 +42,7 @@ export function registerDeletePermissionTool(server: McpServer) {
 
       return formatToolResponse(
         response,
-        `Permission with key '${args.key}' successfully deleted.`
+        `Permission with ID '${args.permissionId}' successfully deleted.`
       );
     }
   );
