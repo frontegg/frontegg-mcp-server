@@ -15,12 +15,12 @@ import {
   registerCreatePermissionTool,
   registerDeletePermissionTool,
   registerUpdatePermissionTool,
-  registerUpdatePermissionsBulkTool,
-  registerUpdatePermissionsClassificationTool,
   registerGetPermissionCategoriesTool,
   registerCreatePermissionCategoryTool,
   registerUpdatePermissionCategoryTool,
   registerDeletePermissionCategoryTool,
+  registerSetPermissionToMultipleRolesTool,
+  registerSetPermissionsClassificationTool,
 } from "./permissions";
 
 // Import API token tool registration functions
@@ -69,8 +69,8 @@ export function registerAllTools(server: McpServer): void {
   registerCreatePermissionTool(server);
   registerDeletePermissionTool(server);
   registerUpdatePermissionTool(server);
-  registerUpdatePermissionsBulkTool(server);
-  registerUpdatePermissionsClassificationTool(server);
+  registerSetPermissionToMultipleRolesTool(server);
+  registerSetPermissionsClassificationTool(server);
 
   // Register Permission Category Tools
   registerGetPermissionCategoriesTool(server);
