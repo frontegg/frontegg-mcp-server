@@ -22,7 +22,10 @@ const updatePermissionSchema = z
       .string()
       .optional()
       .describe("The new description for the permission."),
-    // Add other updatable fields here if known from a full OpenAPI spec
+    categoryId: z
+      .string()
+      .optional()
+      .describe("The new category ID for the permission."),
   })
   .strict();
 

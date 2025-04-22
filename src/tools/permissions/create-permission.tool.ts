@@ -9,17 +9,39 @@ import {
   HttpMethods,
 } from "../../utils/api/frontegg-api";
 
-// Zod schema based on AddPermissionRequest in OpenAPI spec
-const createPermissionSchema = z
+// Zod schema for a single permission object
+const permissionObjectSchema = z
   .object({
-    categoryId: z.string().describe("The category ID for the permission."),
+    categoryId: z
+      .string()
+      .optional()
+      .describe("The category ID for the permission."),
     name: z.string().describe("The display name of the permission."),
-    description: z.string().describe("A description for the permission."),
+    description: z
+      .string()
+      .optional()
+      .describe("A description for the permission."),
     key: z
       .string()
       .describe(
         "A unique key identifying the permission (e.g., 'fe.secure.read')."
       ),
+    assignmentType: z
+      .enum(["NEVER", "ALWAYS", "ASSIGNABLE"])
+      .optional()
+      .describe(
+        "Defines the assignment behavior: NEVER, ALWAYS, or ASSIGNABLE."
+      ),
+  })
+  .strict();
+
+// Updated schema to accept an array of permission objects
+const createPermissionsSchema = z
+  .object({
+    permissions: z
+      .array(permissionObjectSchema)
+      .min(1)
+      .describe("An array of permission objects to create."),
     fronteggTenantIdHeader: z
       .string()
       .optional()
@@ -29,23 +51,23 @@ const createPermissionSchema = z
   })
   .strict();
 
-type CreatePermissionArgs = z.infer<typeof createPermissionSchema>;
+type CreatePermissionsArgs = z.infer<typeof createPermissionsSchema>;
 
 export function registerCreatePermissionTool(server: McpServer) {
   server.tool(
     "create-permission",
-    "Creates a new permission in Frontegg.",
-    createPermissionSchema.shape,
-    async (args: CreatePermissionArgs) => {
+    "Creates one or more new permissions in Frontegg.",
+    createPermissionsSchema.shape,
+    async (args: CreatePermissionsArgs) => {
       const apiUrl = buildFronteggUrl(FronteggEndpoints.PERMISSIONS);
 
-      const { fronteggTenantIdHeader, ...bodyPayload } = args;
+      const { fronteggTenantIdHeader, permissions } = args;
 
       const response = await fetchFromFrontegg(
         HttpMethods.POST,
         apiUrl,
         createBaseHeaders({ fronteggTenantIdHeader }),
-        bodyPayload,
+        permissions,
         "create-permission"
       );
 

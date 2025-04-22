@@ -218,8 +218,8 @@ This server provides the following tools to interact with the Frontegg API:
 2.  `delete_permission`: Deletes a permission.
 3.  `get_permissions`: Retrieves permissions.
 4.  `update_permission`: Updates an existing permission.
-5.  `update_permissions_bulk`: Updates multiple permissions in a single request.
-6.  `update_permissions_classification`: Updates permission classifications.
+5.  `set_permission_multiple-roles`: Associates a permission with multiple roles. Existing roles remain associated.
+6.  `set_permissions_classification`: Sets the classification type (assignment rule: NEVER, ALWAYS, ASSIGNABLE) for specified permissions.
 7.  `set_permissions_to_role`: Assigns permissions to a role, replacing any existing permissions.
 
 **Permission Categories**
