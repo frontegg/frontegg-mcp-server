@@ -34,6 +34,22 @@ import {
   registerCreateClientCredentialsTool,
 } from "./api-tokens";
 
+// Import vendor integration tool registration functions
+import {
+  registerGetVendorIntegrationsTool,
+  registerCreateVendorIntegrationTool,
+  registerUpdateVendorIntegrationTool,
+  registerDeleteVendorIntegrationTool,
+  registerAssignAgentsToVendorIntegrationTool,
+  registerUnassignAgentsFromVendorIntegrationTool,
+} from "./vendor-integrations";
+
+// Import Frontegg integration tool registration functions
+import {
+  registerGetFronteggIntegrationsTool,
+  registerGetFronteggIntegrationTool,
+} from "./frontegg-integrations";
+
 // Import user tool registration functions
 import {
   registerDeleteUserTool,
@@ -47,6 +63,9 @@ import {
   registerGetUsersForApplicationTool,
   registerAssignUsersToApplicationTool,
   registerGetApplicationsTool,
+  registerGetAgentApplicationsTool,
+  registerCreateAgentApplicationTool,
+  registerUpdateAgentApplicationTool,
 } from "./applications";
 
 // Import tenant tool registration functions
@@ -78,7 +97,7 @@ export function registerAllTools(server: McpServer): void {
   registerUpdatePermissionCategoryTool(server);
   registerDeletePermissionCategoryTool(server);
 
-  //   // Register API Token Tools
+  // Register API Token Tools
   registerCreateTokenTool(server);
   registerGetTokensTool(server);
   registerDeleteTokenTool(server);
@@ -88,6 +107,18 @@ export function registerAllTools(server: McpServer): void {
   registerDeleteClientCredentialsTool(server);
   registerUpdateClientCredentialsTool(server);
   registerCreateClientCredentialsTool(server);
+
+  // Register Vendor Integration Tools
+  registerGetVendorIntegrationsTool(server);
+  registerCreateVendorIntegrationTool(server);
+  registerUpdateVendorIntegrationTool(server);
+  registerDeleteVendorIntegrationTool(server);
+  registerAssignAgentsToVendorIntegrationTool(server);
+  registerUnassignAgentsFromVendorIntegrationTool(server);
+
+  // Register Frontegg Integration Tools
+  registerGetFronteggIntegrationsTool(server);
+  registerGetFronteggIntegrationTool(server);
 
   // Register User Tools
   registerDeleteUserTool(server);
@@ -99,11 +130,12 @@ export function registerAllTools(server: McpServer): void {
   registerGetUsersForApplicationTool(server);
   registerAssignUsersToApplicationTool(server);
   registerGetApplicationsTool(server);
+  registerGetAgentApplicationsTool(server);
+  registerCreateAgentApplicationTool(server);
+  registerUpdateAgentApplicationTool(server);
 
-  // // Register Tenant Tools
+  // Register Tenant Tools
   registerCreateTenantTool(server);
   registerDeleteTenantTool(server);
   registerUpdateTenantTool(server);
-
-  // Add other tools/resources here by importing and calling their registration functions
 }

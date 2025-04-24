@@ -192,6 +192,9 @@ This server provides the following tools to interact with the Frontegg API:
 1.  `get_users_for_application`: Retrieves users assigned to a specific application.
 2.  `assign_users_to_application`: Assigns users to a specific application.
 3.  `get_applications`: Fetches Frontegg applications with optional filters.
+4.  `create_agent_application`: Creates a new agent application with specified configuration including name, URLs, access type, and AI-specific settings like model provider and orchestration platform.
+5.  `update_agent_application`: Updates an existing agent application's configuration, allowing modification of properties like name, URLs, access settings, and AI integration settings.
+6.  `get_agent_applications`: Fetches a list of agent applications with optional filtering by access type, default status, active status, or specific IDs.
 
 **API Tokens**
 
@@ -254,3 +257,17 @@ This server provides the following tools to interact with the Frontegg API:
 2.  `delete_user`: Deletes a user.
 3.  `get_users`: Retrieves users.
 4.  `update_user`: Updates an existing user.
+
+**Vendor Integrations**
+
+1.  `get_vendor_integrations`: Fetches all vendor integrations.
+2.  `create_vendor_integration`: Creates a new vendor integration.
+3.  `update_vendor_integration`: Updates an existing vendor integration.
+4.  `delete_vendor_integration`: Deletes a vendor integration.
+5.  `assign_agents_to_vendor_integration`: Assigns agents to a vendor integration.
+6.  `unassign_agents_from_vendor_integration`: Unassigns agents from a vendor integration.
+
+**Frontegg Integrations**
+
+1.  `get_frontegg_integrations`: Fetches all Frontegg integrations.
+2.  `get_frontegg_integration`: Fetches a single Frontegg integration by ID.
