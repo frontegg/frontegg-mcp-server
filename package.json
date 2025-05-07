@@ -1,6 +1,6 @@
 {
   "name": "@frontegg/frontegg-mcp-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "build/index.js",
   "bin": {
@@ -24,6 +24,9 @@
     "pino-pretty": "^13.0.0",
     "typescript": "^5.8.3",
     "@types/express": "^4.17.21"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.10.1",
