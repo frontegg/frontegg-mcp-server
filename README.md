@@ -78,7 +78,7 @@ This will start the server, which listens for MCP connections via standard input
       "mcpServers": {
         "frontegg": {
           "command": "npx",
-          "args": ["frontegg-mcp-server"],
+          "args": ["@frontegg/frontegg-mcp-server"],
           "env": {
             "FRONTEGG_CLIENT_ID": "your_client_id",
             "FRONTEGG_API_KEY": "your_api_key"
@@ -115,7 +115,7 @@ This will start the server, which listens for MCP connections via standard input
       "mcpServers": {
         "frontegg": {
           "command": "npx",
-          "args": ["frontegg-mcp-server"],
+          "args": ["@frontegg/frontegg-mcp-server"],
           "env": {
             "FRONTEGG_CLIENT_ID": "your_client_id",
             "FRONTEGG_API_KEY": "your_api_key"
