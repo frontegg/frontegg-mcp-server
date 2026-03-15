@@ -69,7 +69,7 @@ type CreateAgentApplicationArgs = z.infer<typeof createAgentApplicationSchema>;
 // Function to register the create-agent-application tool
 export function registerCreateAgentApplicationTool(server: McpServer) {
   server.tool(
-    "create_agent_application",
+    "create-agent-application",
     "Creates a new agent application with the specified configuration.",
     createAgentApplicationSchema.shape,
     async (args: CreateAgentApplicationArgs) => {

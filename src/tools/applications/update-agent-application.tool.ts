@@ -69,7 +69,7 @@ type UpdateAgentApplicationArgs = z.infer<typeof updateAgentApplicationSchema>;
 // Function to register the update-agent-application tool
 export function registerUpdateAgentApplicationTool(server: McpServer) {
   server.tool(
-    "update_agent_application",
+    "update-agent-application",
     "Updates an existing agent application with the specified configuration.",
     updateAgentApplicationSchema.shape,
     async (args: UpdateAgentApplicationArgs) => {

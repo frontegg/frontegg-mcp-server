@@ -112,9 +112,14 @@ function _getResponseText(
   if (customMessage) {
     return customMessage;
   }
-  // Otherwise just return the API response, or status if blank
-  else if (response.data) {
-    return JSON.stringify(response.data, null, 2);
+  // Return compact JSON (no pretty-printing) so AI clients can decode reliably.
+  // Large indented payloads can be truncated mid-stream by some clients.
+  else if (response.data !== null && response.data !== undefined) {
+    try {
+      return JSON.stringify(response.data);
+    } catch {
+      return String(response.data);
+    }
   } else {
     return `Status: ${response.status} ${response.statusText}`;
   }

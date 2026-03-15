@@ -67,18 +67,23 @@ async function main(): Promise<void> {
       }
 
       // No session header → create new transport (expects initialize request)
+      // Pre-generate the session ID and store it BEFORE calling handleRequest.
+      // This prevents a race condition where the client receives the session ID
+      // in the response header and immediately sends a GET /mcp SSE request, but
+      // the transport hasn't been stored in the map yet → 400 Unknown session id.
+      const newSessionId = randomUUID();
       const t = new StreamableHTTPServerTransport({
-        sessionIdGenerator: () => randomUUID(),
+        sessionIdGenerator: () => newSessionId,
       });
       await server.connect(t);
-      await t.handleRequest(req as any, res as any, req.body);
 
-      if (t.sessionId) {
-        transports[t.sessionId] = t;
-        t.onclose = () => {
-          delete transports[t.sessionId!];
-        };
-      }
+      // Store before handleRequest sends the response so any concurrent GET is valid
+      transports[newSessionId] = t;
+      t.onclose = () => {
+        delete transports[newSessionId];
+      };
+
+      await t.handleRequest(req as any, res as any, req.body);
     } catch (err) {
       logger.error(`Error handling MCP request: ${String(err)}`);
       if (!res.headersSent) {

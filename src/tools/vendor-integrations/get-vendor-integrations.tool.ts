@@ -5,16 +5,17 @@ import {
   createBaseHeaders,
   fetchFromFrontegg,
   formatToolResponse,
+  FronteggEndpoints,
   HttpMethods,
 } from "../../utils/api/frontegg-api";
 
 export function registerGetVendorIntegrationsTool(server: McpServer) {
   server.tool(
-    "get_vendor_integrations",
+    "get-vendor-integrations",
     "Fetches all vendor integrations",
     z.object({}).shape,
     async () => {
-      const apiUrl = buildFronteggUrl("/app-integrations/resources/vendors-integrations/v1");
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.VENDOR_INTEGRATIONS);
       const response = await fetchFromFrontegg(
         HttpMethods.GET,
         apiUrl,

@@ -68,6 +68,16 @@ import {
   registerUpdateAgentApplicationTool,
 } from "./applications";
 
+// Import personal token tool registration functions
+import {
+  registerGetUserAccessTokensTool,
+  registerCreateUserAccessTokenTool,
+  registerDeleteUserAccessTokenTool,
+  registerGetUserApiTokensTool,
+  registerCreateUserApiTokenTool,
+  registerDeleteUserApiTokenTool,
+} from "./personal-tokens";
+
 // Import tenant tool registration functions
 import {
   registerCreateTenantTool,
@@ -133,6 +143,14 @@ export function registerAllTools(server: McpServer): void {
   registerGetAgentApplicationsTool(server);
   registerCreateAgentApplicationTool(server);
   registerUpdateAgentApplicationTool(server);
+
+  // Register Personal Token Tools
+  registerGetUserAccessTokensTool(server);
+  registerCreateUserAccessTokenTool(server);
+  registerDeleteUserAccessTokenTool(server);
+  registerGetUserApiTokensTool(server);
+  registerCreateUserApiTokenTool(server);
+  registerDeleteUserApiTokenTool(server);
 
   // Register Tenant Tools
   registerCreateTenantTool(server);
