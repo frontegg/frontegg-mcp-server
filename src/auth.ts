@@ -23,7 +23,7 @@ export async function authenticateFrontegg(): Promise<string> {
     const errorMessage =
       "Error: FRONTEGG_CLIENT_ID and FRONTEGG_API_KEY must be set in the .env file.";
     logger.error(errorMessage);
-    process.exit(1);
+    throw new Error(errorMessage);
   }
 
   const authUrl = `${fronteggBaseUrl}/auth/vendor/`;
@@ -56,7 +56,7 @@ export async function authenticateFrontegg(): Promise<string> {
     } else {
       logger.error(`Error during Frontegg authentication: ${error}`);
     }
-    process.exit(1); // Exit if authentication fails
+    throw new Error(`Frontegg authentication failed: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
 

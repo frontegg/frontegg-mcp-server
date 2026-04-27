@@ -36,7 +36,7 @@ type GetAgentApplicationsArgs = z.infer<typeof getAgentApplicationsSchema>;
 // Function to register the get-agent-applications tool
 export function registerGetAgentApplicationsTool(server: McpServer) {
   server.tool(
-    "get_agent_applications",
+    "get-agent-applications",
     "Fetches a list of agent applications for the environment, with optional filtering.",
     getAgentApplicationsSchema.shape,
     async (args: GetAgentApplicationsArgs) => {

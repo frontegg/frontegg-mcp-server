@@ -5,18 +5,19 @@ import {
   createBaseHeaders,
   fetchFromFrontegg,
   formatToolResponse,
+  FronteggEndpoints,
   HttpMethods,
 } from '../../utils/api/frontegg-api';
 
 export function registerDeleteVendorIntegrationTool(server: McpServer) {
   server.tool(
-    'delete_vendor_integration',
+    'delete-vendor-integration',
     'Deletes a vendor integration',
     z.object({
       id: z.string().describe('The ID of the vendor integration to delete'),
     }).shape,
     async (args) => {
-      const apiUrl = buildFronteggUrl(`/app-integrations/resources/vendors-integrations/v1/${args.id}`);
+      const apiUrl = buildFronteggUrl(`${FronteggEndpoints.VENDOR_INTEGRATIONS}/${encodeURIComponent(args.id)}`);
       const response = await fetchFromFrontegg(
         HttpMethods.DELETE,
         apiUrl,

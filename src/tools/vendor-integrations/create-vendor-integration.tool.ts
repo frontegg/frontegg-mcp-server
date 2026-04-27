@@ -5,6 +5,7 @@ import {
   createBaseHeaders,
   fetchFromFrontegg,
   formatToolResponse,
+  FronteggEndpoints,
   HttpMethods,
 } from '../../utils/api/frontegg-api';
 
@@ -25,7 +26,7 @@ const createVendorIntegrationSchema = z
     tools: z.array(z.string()).describe('Array of tool identifiers'),
     useFronteggIntegration: z.boolean().default(true).describe('Whether to use Frontegg integration'),
     isActive: z.boolean().default(true).describe('Whether the integration is active'),
-    oauthConfigurations: oAuthConfigSchema.describe(
+    oauthConfigurations: oAuthConfigSchema.optional().describe(
       'OAuth configuration, required when not using Frontegg integration',
     ),
   })
@@ -33,11 +34,11 @@ const createVendorIntegrationSchema = z
 
 export function registerCreateVendorIntegrationTool(server: McpServer) {
   server.tool(
-    'create_vendor_integration',
+    'create-vendor-integration',
     'Creates a new vendor integration',
     createVendorIntegrationSchema.shape,
     async (args) => {
-      const apiUrl = buildFronteggUrl('/app-integrations/resources/vendors-integrations/v1');
+      const apiUrl = buildFronteggUrl(FronteggEndpoints.VENDOR_INTEGRATIONS);
       const response = await fetchFromFrontegg(
         HttpMethods.POST,
         apiUrl,

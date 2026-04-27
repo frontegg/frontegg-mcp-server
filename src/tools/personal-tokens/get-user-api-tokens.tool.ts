@@ -12,7 +12,7 @@ import {
 // Zod schema based on Frontegg API for getting user API tokens (client credentials)
 const getUserApiTokensSchema = z
   .object({
-    tenantId: z
+    fronteggTenantIdHeader: z
       .string()
       .describe("The tenant ID identifier (frontegg-tenant-id header)"),
     userId: z
@@ -30,14 +30,14 @@ export function registerGetUserApiTokensTool(server: McpServer) {
     "Fetches Frontegg user API tokens (client credentials tokens).",
     getUserApiTokensSchema.shape,
     async (args: GetUserApiTokensArgs) => {
-      const { tenantId, userId } = args;
+      const { fronteggTenantIdHeader, userId } = args;
       const apiUrl = buildFronteggUrl(
         FronteggEndpoints.USER_API_TOKENS // Using the correct endpoint
       );
 
       // Headers require tenantId and userId
       const headers = createBaseHeaders({
-        fronteggTenantIdHeader: tenantId,
+        fronteggTenantIdHeader,
         userIdHeader: userId,
       }) as Record<string, string>;
 

@@ -34,4 +34,6 @@ export const FronteggEndpoints = {
   APPLICATION: "/applications/resources/applications/v1",
   TENANTS_V1: "/tenants/resources/tenants/v1",
   TENANTS_V2: "/tenants/resources/tenants/v2",
+  VENDOR_INTEGRATIONS: "/app-integrations/resources/vendors-integrations/v1",
+  FRONTEGG_INTEGRATIONS: "/app-integrations/resources/frontegg-integrations/v1",
 };

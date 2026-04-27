@@ -8,6 +8,7 @@ import {
   FronteggEndpoints,
   HttpMethods,
 } from "../../utils/api/frontegg-api";
+import { logger } from "../../utils/logger";
 
 // Zod schema for the update-role tool arguments
 const updateRoleSchema = z
@@ -67,7 +68,7 @@ export function registerUpdateRoleTool(server: McpServer) {
       );
 
       if (Object.keys(requestBody).length === 0) {
-        console.error(
+        logger.error(
           "[update-role] Error: No update fields provided in the request body."
         );
         return {

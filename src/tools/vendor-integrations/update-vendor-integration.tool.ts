@@ -5,6 +5,7 @@ import {
   createBaseHeaders,
   fetchFromFrontegg,
   formatToolResponse,
+  FronteggEndpoints,
   HttpMethods,
 } from '../../utils/api/frontegg-api';
 
@@ -32,12 +33,12 @@ const updateVendorIntegrationSchema = z
 
 export function registerUpdateVendorIntegrationTool(server: McpServer) {
   server.tool(
-    'update_vendor_integration',
+    'update-vendor-integration',
     'Updates an existing vendor integration',
     updateVendorIntegrationSchema.shape,
     async (args) => {
       const {id, ...body} = args;
-      const apiUrl = buildFronteggUrl(`/app-integrations/resources/vendors-integrations/v1/${id}`);
+      const apiUrl = buildFronteggUrl(`${FronteggEndpoints.VENDOR_INTEGRATIONS}/${encodeURIComponent(id)}`);
       const response = await fetchFromFrontegg(
         HttpMethods.PATCH,
         apiUrl,

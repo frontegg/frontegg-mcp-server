@@ -5,6 +5,7 @@ import {
   createBaseHeaders,
   fetchFromFrontegg,
   formatToolResponse,
+  FronteggEndpoints,
   HttpMethods,
 } from '../../utils/api/frontegg-api';
 
@@ -17,11 +18,11 @@ const agentsSchema = z
 
 export function registerUnassignAgentsFromVendorIntegrationTool(server: McpServer) {
   server.tool(
-    'unassign_agents_from_vendor_integration',
+    'unassign-agents-from-vendor-integration',
     'Unassigns agents from a vendor integration',
     agentsSchema.shape,
     async (args) => {
-      const apiUrl = buildFronteggUrl(`/app-integrations/resources/vendors-integrations/v1/${args.id}/agents/unassign`);
+      const apiUrl = buildFronteggUrl(`${FronteggEndpoints.VENDOR_INTEGRATIONS}/${encodeURIComponent(args.id)}/agents/unassign`);
       const response = await fetchFromFrontegg(
         HttpMethods.POST,
         apiUrl,
