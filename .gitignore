@@ -1,17 +1,17 @@
-# Dependency directories
+# Dependencies
 node_modules/
-npm-debug.log
+npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
 .pnpm-debug.log*
 
-# Build directories
-build/
+# Build output
 dist/
-out/
-.next/
+build/
+*.tsbuildinfo
 
-# Environment variables
+# Environment files
 .env
 .env.local
 .env.development.local
@@ -19,35 +19,79 @@ out/
 .env.production.local
 
 # Logs
-logs
+logs/
 *.log
-mcp-server.log
+npm-debug.log*
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# Editor directories and files
-.idea/
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+*.lcov
+.nyc_output
+
+# IDE
 .vscode/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
+Thumbs.db
+
+# Testing
+.jest/
+__tests__/coverage/
 
 # Cache
-.npm
 .eslintcache
+.npm
+.yarn-integrity
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
 .stylelintcache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
 
-# Coverage directory used by tools like istanbul
-coverage
-*.lcov
+# Temporary files
+tmp/
+temp/
+*.tmp
 
-# TypeScript cache
-*.tsbuildinfo
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# Output of 'npm pack'
-*.tgz 
+# Docker
+.dockerignore
+
+# Backup files
+*.backup
+*.bak
+
+# Lock files (optionally)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+# Superpowers brainstorm scratch
+.superpowers/
+
+# Claude Code agent worktrees + session scratch (local-only, never commit)
+.claude/

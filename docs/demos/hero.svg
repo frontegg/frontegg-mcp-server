@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b0d10"/>
+      <stop offset="1" stop-color="#0a0b0e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- page background -->
+  <rect width="1200" height="780" fill="#05060a"/>
+
+  <!-- app window -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="40" width="1080" height="700" rx="14" fill="url(#bg)" stroke="#1f2937" stroke-width="1"/>
+
+    <!-- title bar -->
+    <rect x="60" y="40" width="1080" height="46" rx="14" fill="#0f1217"/>
+    <rect x="60" y="72" width="1080" height="14" fill="#0f1217"/>
+    <circle cx="88"  cy="63" r="6.5" fill="#ff5f57"/>
+    <circle cx="110" cy="63" r="6.5" fill="#febc2e"/>
+    <circle cx="132" cy="63" r="6.5" fill="#28c840"/>
+    <text x="600" y="68" font-size="13" fill="#64748b" text-anchor="middle" font-weight="500">Claude  ·  frontegg-support MCP</text>
+
+    <!-- sidebar accent -->
+    <rect x="60" y="86" width="4" height="654" fill="url(#accent)" opacity="0.6"/>
+
+    <!-- ───── USER MESSAGE ───── -->
+    <g transform="translate(640, 118)">
+      <text x="450" y="0" font-size="12" fill="#64748b" text-anchor="end" font-weight="600" letter-spacing="0.3">YOU</text>
+      <rect x="0" y="14" width="450" height="74" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+      <text x="20" y="42" font-size="14" fill="#e2e8f0">Deep links aren't opening my app after Frontegg</text>
+      <text x="20" y="62" font-size="14" fill="#e2e8f0">login. Fix it — /Users/me/code/mobile-app</text>
+      <text x="20" y="80" font-size="13" fill="#94a3b8" font-style="italic">Use frontegg_auto</text>
+    </g>
+
+    <!-- ───── ASSISTANT MESSAGE ───── -->
+    <g transform="translate(100, 220)">
+      <!-- avatar + label -->
+      <circle cx="14" cy="14" r="14" fill="url(#accent)"/>
+      <text x="14" y="19" font-size="14" fill="#fff" text-anchor="middle" font-weight="700">F</text>
+      <text x="38" y="19" font-size="13" fill="#94a3b8" font-weight="600" letter-spacing="0.3">FRONTEGG SUPPORT MCP</text>
+
+      <!-- response card -->
+      <rect x="0" y="38" width="1000" height="470" rx="12" fill="#0f172a" stroke="#1f2937" stroke-width="1"/>
+
+      <!-- report title -->
+      <text x="22" y="72" font-size="18" fill="#f1f5f9" font-weight="700">Frontegg Auto Report</text>
+      <text x="22" y="94" font-size="13" fill="#94a3b8">Detected SDK: <tspan fill="#a5b4fc" font-weight="600">react-native v1.2.3</tspan>   ·   Canonical source: <tspan fill="#818cf8">github.com/frontegg/frontegg-react-native</tspan></text>
+
+      <!-- divider -->
+      <line x1="22" y1="112" x2="978" y2="112" stroke="#1e293b" stroke-width="1"/>
+
+      <!-- findings header -->
+      <text x="22" y="140" font-size="12" fill="#64748b" font-weight="700" letter-spacing="0.5">FINDINGS · DEEP-LINK</text>
+
+      <!-- finding 1 -->
+      <rect x="22" y="152" width="956" height="56" rx="8" fill="#1a0f1a" stroke="#450a0a" stroke-width="1"/>
+      <rect x="22" y="152" width="4" height="56" rx="2" fill="#f87171"/>
+      <text x="40" y="174" font-size="10" fill="#f87171" font-weight="700" letter-spacing="0.5">HIGH</text>
+      <text x="84" y="174" font-size="14" fill="#f1f5f9" font-weight="600">RN Android — missing intent-filter for deep links</text>
+      <text x="40" y="194" font-size="12" fill="#94a3b8">android/app/src/main/AndroidManifest.xml</text>
+
+      <!-- finding 2 -->
+      <rect x="22" y="218" width="956" height="56" rx="8" fill="#1a0f1a" stroke="#450a0a" stroke-width="1"/>
+      <rect x="22" y="218" width="4" height="56" rx="2" fill="#f87171"/>
+      <text x="40" y="240" font-size="10" fill="#f87171" font-weight="700" letter-spacing="0.5">HIGH</text>
+      <text x="84" y="240" font-size="14" fill="#f1f5f9" font-weight="600">RN iOS — CFBundleURLTypes not declared</text>
+      <text x="40" y="260" font-size="12" fill="#94a3b8">ios/MobileApp/Info.plist</text>
+
+      <!-- diff block -->
+      <text x="22" y="302" font-size="12" fill="#64748b" font-weight="700" letter-spacing="0.5">READY-TO-APPLY DIFF · rn.android.intentFilter.missing</text>
+      <rect x="22" y="314" width="956" height="156" rx="8" fill="#0a0e18" stroke="#1e293b" stroke-width="1"/>
+      <g font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12">
+        <text x="38" y="334" fill="#64748b">--- android/app/src/main/AndroidManifest.xml</text>
+        <text x="38" y="350" fill="#64748b">+++ android/app/src/main/AndroidManifest.xml</text>
+        <text x="38" y="366" fill="#475569">@@</text>
+        <text x="38" y="384" fill="#4ade80">+    &lt;intent-filter&gt;</text>
+        <text x="38" y="400" fill="#4ade80">+        &lt;action android:name="android.intent.action.VIEW" /&gt;</text>
+        <text x="38" y="416" fill="#4ade80">+        &lt;category android:name="android.intent.category.DEFAULT" /&gt;</text>
+        <text x="38" y="432" fill="#4ade80">+        &lt;category android:name="android.intent.category.BROWSABLE" /&gt;</text>
+        <text x="38" y="448" fill="#4ade80">+        &lt;data android:scheme="yourapp" android:host="auth" /&gt;</text>
+        <text x="38" y="464" fill="#4ade80">+    &lt;/intent-filter&gt;</text>
+      </g>
+    </g>
+
+    <!-- footer evidence strip -->
+    <g transform="translate(100, 712)">
+      <rect x="0" y="0" width="1000" height="16" rx="4" fill="transparent"/>
+      <text x="0" y="12" font-size="11" fill="#475569">
+        <tspan font-weight="700" fill="#64748b">EVIDENCE  </tspan>
+        <tspan>2 rules applied · canonical source: frontegg-react-native@master · fetched live from github.com · BMAD+godmode completion-gate</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

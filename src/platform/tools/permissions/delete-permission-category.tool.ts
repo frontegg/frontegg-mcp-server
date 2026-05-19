@@ -1,0 +1,49 @@
+import { McpServer } from "../../sdk-compat.js";
+import { z } from "zod";
+import {
+  buildFronteggUrl,
+  createBaseHeaders,
+  fetchFromFrontegg,
+  formatToolResponse,
+  FronteggEndpoints,
+  HttpMethods,
+} from "../../utils/api/frontegg-api.js";
+
+const deletePermissionCategorySchema = z
+  .object({
+    categoryId: z.string().min(1),
+  })
+  .strict();
+
+type DeletePermissionCategoryArgs = z.infer<
+  typeof deletePermissionCategorySchema
+>;
+
+export function registerDeletePermissionCategoryTool(server: McpServer) {
+  server.tool(
+    "delete-permission-category",
+    "Deletes a permission category from Frontegg.",
+    deletePermissionCategorySchema.shape,
+    async (args: DeletePermissionCategoryArgs) => {
+      const { categoryId } = args;
+
+      const apiUrl = buildFronteggUrl(
+        FronteggEndpoints.PERMISSION_CATEGORIES,
+        categoryId
+      );
+
+      const response = await fetchFromFrontegg(
+        HttpMethods.DELETE,
+        apiUrl,
+        createBaseHeaders(),
+        undefined,
+        "delete-permission-category"
+      );
+
+      return formatToolResponse(
+        response,
+        "Permission category deleted successfully."
+      );
+    }
+  );
+}

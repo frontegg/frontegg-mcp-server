@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  :root { --frontegg-purple: #5C3DE6; --frontegg-bg: #0B0B16; --frontegg-fg: #F5F5FA; --dim: #5C5C70; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { width: 1920px; height: 1080px; background: var(--frontegg-bg); color: var(--frontegg-fg); font-family: -apple-system, "Inter", sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  h2 { font-size: 56px; font-weight: 700; margin-bottom: 60px; text-align: center; line-height: 1.15; }
+  h2 span { color: var(--frontegg-purple); }
+  .strip { display: flex; gap: 48px; }
+  .client { width: 380px; height: 200px; background: #15151F; border: 1px solid #2A2A3A; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px; }
+  .name { font-size: 32px; font-weight: 600; margin-bottom: 8px; }
+  .conn { font-size: 16px; color: var(--frontegg-purple); letter-spacing: 0.05em; text-transform: uppercase; }
+  .dot { display: inline-block; width: 8px; height: 8px; background: var(--frontegg-purple); border-radius: 50%; margin-right: 8px; box-shadow: 0 0 12px var(--frontegg-purple); }
+  footer { font-size: 24px; color: var(--dim); margin-top: 80px; max-width: 1300px; text-align: center; line-height: 1.4; }
+</style>
+</head>
+<body>
+<h2>Works in <span>any MCP-compatible client</span>.</h2>
+<div class="strip">
+  <div class="client"><div class="name">Cursor</div><div class="conn"><span class="dot"></span>frontegg-mobile</div></div>
+  <div class="client"><div class="name">Claude Code</div><div class="conn"><span class="dot"></span>frontegg-mobile</div></div>
+  <div class="client"><div class="name">Claude Desktop</div><div class="conn"><span class="dot"></span>frontegg-mobile</div></div>
+</div>
+<footer>The intelligence is the MCP. The chat is just the surface.</footer>
+</body>
+</html>

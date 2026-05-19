@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 580" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+  <defs>
+    <linearGradient id="bgS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b0d10"/><stop offset="1" stop-color="#0a0b0e"/>
+    </linearGradient>
+    <linearGradient id="accS" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f43f5e"/><stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <filter id="shS" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  <rect width="1100" height="580" fill="#05060a"/>
+  <g filter="url(#shS)">
+    <rect x="40" y="30" width="1020" height="520" rx="14" fill="url(#bgS)" stroke="#1f2937"/>
+    <rect x="40" y="30" width="1020" height="40" rx="14" fill="#0f1217"/>
+    <rect x="40" y="60" width="1020" height="10" fill="#0f1217"/>
+    <circle cx="68"  cy="50" r="6" fill="#ff5f57"/>
+    <circle cx="88"  cy="50" r="6" fill="#febc2e"/>
+    <circle cx="108" cy="50" r="6" fill="#28c840"/>
+    <text x="550" y="55" font-size="12" fill="#64748b" text-anchor="middle" font-weight="500">Claude  ·  frontegg-support MCP</text>
+    <rect x="40" y="70" width="4" height="480" fill="url(#accS)" opacity="0.7"/>
+
+    <!-- user -->
+    <g transform="translate(560, 94)">
+      <text x="470" y="0" font-size="11" fill="#64748b" text-anchor="end" font-weight="700" letter-spacing="0.3">YOU</text>
+      <rect x="0" y="10" width="470" height="56" rx="10" fill="#1e293b" stroke="#334155"/>
+      <text x="18" y="34" font-size="13" fill="#e2e8f0">Security sanity check before shipping.</text>
+      <text x="18" y="54" font-size="13" fill="#94a3b8" font-style="italic">Flag anything risky about Frontegg config.</text>
+    </g>
+
+    <!-- assistant -->
+    <g transform="translate(70, 178)">
+      <circle cx="13" cy="13" r="13" fill="url(#accS)"/>
+      <text x="13" y="18" font-size="13" fill="#fff" text-anchor="middle" font-weight="700">F</text>
+      <text x="34" y="18" font-size="12" fill="#94a3b8" font-weight="700" letter-spacing="0.3">FRONTEGG SUPPORT MCP</text>
+
+      <rect x="0" y="34" width="960" height="332" rx="12" fill="#0f172a" stroke="#1f2937"/>
+
+      <text x="20" y="66" font-size="16" fill="#f1f5f9" font-weight="700">Security sweep — 4 issues to fix before ship</text>
+      <line x1="20" y1="84" x2="940" y2="84" stroke="#1e293b"/>
+
+      <text x="20" y="108" font-size="11" fill="#64748b" font-weight="700" letter-spacing="0.5">FINDINGS · SECURITY</text>
+
+      <!-- s1 http base url -->
+      <rect x="20" y="120" width="920" height="44" rx="8" fill="#1a0f1a" stroke="#450a0a"/>
+      <rect x="20" y="120" width="4" height="44" rx="2" fill="#f87171"/>
+      <text x="38" y="140" font-size="10" fill="#f87171" font-weight="700" letter-spacing="0.5">HIGH</text>
+      <text x="80" y="140" font-size="13" fill="#f1f5f9" font-weight="600">FRONTEGG_BASE_URL uses HTTP</text>
+      <text x="80" y="156" font-size="11" fill="#94a3b8">.env — tokens and auth cookies must only flow over HTTPS</text>
+
+      <!-- s2 env not gitignored -->
+      <rect x="20" y="172" width="920" height="44" rx="8" fill="#1a0f1a" stroke="#450a0a"/>
+      <rect x="20" y="172" width="4" height="44" rx="2" fill="#f87171"/>
+      <text x="38" y="192" font-size="10" fill="#f87171" font-weight="700" letter-spacing="0.5">HIGH</text>
+      <text x="80" y="192" font-size="13" fill="#f1f5f9" font-weight="600">.env is not listed in .gitignore</text>
+      <text x="80" y="208" font-size="11" fill="#94a3b8">Committing .env exposes client ids in version-control history</text>
+
+      <!-- s3 hardcoded client id -->
+      <rect x="20" y="224" width="920" height="44" rx="8" fill="#1a1608" stroke="#3f2d06"/>
+      <rect x="20" y="224" width="4" height="44" rx="2" fill="#fbbf24"/>
+      <text x="38" y="244" font-size="10" fill="#fbbf24" font-weight="700" letter-spacing="0.5">MEDIUM</text>
+      <text x="104" y="244" font-size="13" fill="#f1f5f9" font-weight="600">Hardcoded clientId detected in source</text>
+      <text x="104" y="260" font-size="11" fill="#94a3b8">src/config/frontegg.ts — move to build-time env injection</text>
+
+      <!-- s4 ios ats -->
+      <rect x="20" y="276" width="920" height="44" rx="8" fill="#1a1608" stroke="#3f2d06"/>
+      <rect x="20" y="276" width="4" height="44" rx="2" fill="#fbbf24"/>
+      <text x="38" y="296" font-size="10" fill="#fbbf24" font-weight="700" letter-spacing="0.5">MEDIUM</text>
+      <text x="104" y="296" font-size="13" fill="#f1f5f9" font-weight="600">iOS Info.plist has ATS exception allowing HTTP Frontegg traffic</text>
+      <text x="104" y="312" font-size="11" fill="#94a3b8">ios/App/Info.plist — remove NSAppTransportSecurity override</text>
+
+      <!-- completion gate footer -->
+      <line x1="20" y1="338" x2="940" y2="338" stroke="#1e293b"/>
+      <text x="20" y="358" font-size="11" fill="#475569"><tspan font-weight="700" fill="#64748b">COMPLETION GATE  </tspan>Do NOT mark "shipped" until every item above has been verified by observation, not inference.</text>
+    </g>
+
+    <text x="70" y="540" font-size="11" fill="#475569"><tspan font-weight="700" fill="#64748b">EVIDENCE  </tspan>4 security rules applied · BMAD+godmode security-protocol active</text>
+  </g>
+</svg>
