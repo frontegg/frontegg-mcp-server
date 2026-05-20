@@ -26,9 +26,11 @@ export function bindRegistry(server: Server, registry: ToolRegistry): void {
     return { tools: registry.list() };
   });
 
-  server.setRequestHandler(CallToolRequestSchema, async (request: any) => {
-    const name = request.params?.name as string;
-    const args = request.params?.arguments;
+  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+    // request is inferred from CallToolRequestSchema — request.params.name
+    // is a string, request.params.arguments is Record<string, unknown> | undefined.
+    const name = request.params.name;
+    const args = request.params.arguments;
     logger.debug('tools/call', { name });
     try {
       return await registry.call(name, args);

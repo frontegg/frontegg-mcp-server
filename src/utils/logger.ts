@@ -1,33 +1,11 @@
 import winston from 'winston';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { getLogsDir } from './module-paths.js';
 
-// Resolve this module's directory in a way that works under both:
-//   - ESM runtime (Node loads `dist/utils/logger.js` as ESM in production)
-//   - CommonJS-style transpilation (ts-jest's default transformer emits
-//     CJS, and the TS compiler rejects bare `import.meta` under
-//     `module: commonjs`).
-//
-// `resolveModuleDir()` deliberately hides `import.meta` behind a Function
-// constructor so the TS compiler doesn't see it at type-check time. The
-// expression returns `undefined` when invoked under CJS (where
-// `import.meta` is genuinely unavailable), and the URL string otherwise.
-// Falls back to `process.cwd()` when ESM-resolution fails.
-//
-// We use `MODULE_DIR` rather than the conventional `__dirname` to avoid
-// colliding with the CJS-injected `__dirname` global when this file is
-// loaded under ts-jest's CommonJS-style transform.
-const MODULE_DIR = (() => {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
-    const getMetaUrl = new Function('try { return import.meta.url; } catch { return undefined; }');
-    const url = getMetaUrl() as string | undefined;
-    if (url) return path.dirname(fileURLToPath(url));
-  } catch {
-    /* fallthrough */
-  }
-  return process.cwd();
-})();
+// All cross-runtime (ESM / CJS-under-ts-jest) path resolution lives in
+// `module-paths.ts` now. Both logger.ts and config-manager.ts go through
+// the same helper so the approach is consistent.
+const LOGS_DIR = getLogsDir();
 
 /**
  * Custom log format for better readability
@@ -95,7 +73,7 @@ export class Logger {
       // Error log file
       transports.push(
         new winston.transports.File({
-          filename: path.join(MODULE_DIR, '../../logs/error.log'),
+          filename: path.join(LOGS_DIR, 'error.log'),
           level: 'error',
           format: winston.format.combine(
             winston.format.timestamp(),
@@ -110,7 +88,7 @@ export class Logger {
       // Combined log file
       transports.push(
         new winston.transports.File({
-          filename: path.join(MODULE_DIR, '../../logs/combined.log'),
+          filename: path.join(LOGS_DIR, 'combined.log'),
           format: winston.format.combine(
             winston.format.timestamp(),
             winston.format.errors({ stack: true }),

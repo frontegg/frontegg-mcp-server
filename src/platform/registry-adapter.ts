@@ -78,9 +78,24 @@ export class RegistryAdapter {
       additionalProperties?: unknown;
     };
 
+    // Runtime guard against silent schema-generation failures.
+    // zodToJsonSchema is supposed to produce `{ type: "object", properties:
+    // { ... } }` for a ZodObject input. If it ever returns something else
+    // (upstream library change, malformed Zod schema upstream, an unsupported
+    // schema kind getting passed through) we'd otherwise register a tool
+    // with an empty / wrong input schema and the breakage would surface
+    // much later as runtime validation errors on real callers.
+    if (fullSchema.type !== 'object' || typeof fullSchema.properties !== 'object' || fullSchema.properties === null) {
+      throw new Error(
+        `RegistryAdapter: zodToJsonSchema did not produce an object schema for tool "${name}". ` +
+          `Got type=${String(fullSchema.type)}, properties=${typeof fullSchema.properties}. ` +
+          `Indicates a malformed upstream Zod schema or a zod-to-json-schema regression.`,
+      );
+    }
+
     const inputSchema = {
       type: 'object' as const,
-      properties: fullSchema.properties ?? {},
+      properties: fullSchema.properties,
       required: fullSchema.required ?? [],
     };
 

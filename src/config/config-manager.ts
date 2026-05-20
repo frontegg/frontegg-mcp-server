@@ -1,8 +1,7 @@
 import { z } from 'zod';
 import dotenv from 'dotenv';
 import { Logger } from '../utils/logger.js';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import { getMcpEnvPath } from '../utils/module-paths.js';
 
 // Load environment variables — ONLY from a .env file colocated with the MCP
 // server itself, NOT from the cwd. When this MCP is launched by an IDE
@@ -14,12 +13,11 @@ import { dirname, resolve } from 'node:path';
 // placeholder was overriding the working `api.frontegg.com` default and
 // breaking every Management API call until the user restarted the MCP.
 //
-// Resolve to a .env file next to the compiled MCP source. If it doesn't
-// exist, no env is loaded — env must come from the IDE's MCP server config.
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const mcpServerEnvPath = resolve(__dirname, '../../.env');
-dotenv.config({ path: mcpServerEnvPath, override: false });
+// Path resolution goes through `module-paths.ts` (shared with the logger)
+// so both files use the same ESM/CJS-safe pattern. Direct `import.meta.url`
+// here used to break under Jest's CJS transform — now it doesn't, because
+// the helper hides the access behind `new Function`.
+dotenv.config({ path: getMcpEnvPath(), override: false });
 
 /**
  * Configuration schema using Zod for validation

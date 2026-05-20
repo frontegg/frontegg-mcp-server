@@ -1,13 +1,20 @@
 #!/usr/bin/env node
 
 /**
- * Main entry point for the Frontegg Mobile MCP Server
- * Provides AI-powered diagnosis + fix diffs for Frontegg mobile SDK integrations
+ * Main entry point for the Frontegg MCP Server.
+ * 96 tools across two surfaces (mobile/audit + Frontegg Management API).
  */
 
+import { createRequire } from 'node:module';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { ConfigManager } from './config/config-manager.js';
+
+// Read package metadata at runtime so MCP `initialize` reports the same
+// name + version as npm + package.json. Avoids drift where the server
+// stayed at "1.0.0" while package.json advanced to "2.0.0".
+const requireFromHere = createRequire(import.meta.url);
+const pkg = requireFromHere('../package.json') as { name: string; version: string };
 import { Logger } from './utils/logger.js';
 import { WorkspaceTools } from './tools/workspace-tools.js';
 import { FronteggAutoTool } from './tools/frontegg-auto.js';
@@ -59,11 +66,12 @@ async function startServer(): Promise<void> {
     const healthCheck = new HealthCheck();
     await healthCheck.performStartupChecks();
     
-    // Create MCP server instance
+    // Create MCP server instance — name + version sourced from package.json
+    // so the initialize response always matches what's actually installed.
     const server = new Server(
       {
-        name: 'frontegg-mobile-mcp-server',
-        version: '1.0.0',
+        name: pkg.name,
+        version: pkg.version,
       },
       {
         capabilities: {
@@ -104,7 +112,9 @@ async function startServer(): Promise<void> {
     // Registered via RegistryAdapter so upstream's McpServer.tool() calls land
     // in this same ToolRegistry as kebab-case tool names. No name collisions
     // with the snake_case mobile/audit tools above.
-    registerPlatformTools(new RegistryAdapter(registry) as never);
+    // (The `McpServer` type that `registerPlatformTools` accepts is just a
+    // re-export of `RegistryAdapter` from sdk-compat.ts — no cast needed.)
+    registerPlatformTools(new RegistryAdapter(registry));
     bindRegistry(server, registry);
     logger.info('Tool registry bound', { tools: registry.names() });
     
@@ -129,28 +139,12 @@ async function startServer(): Promise<void> {
   }
 }
 
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (reason: unknown, promise: Promise<unknown>) => {
-  logger.error('Unhandled Rejection at:', { promise, reason });
-  process.exit(1);
-});
-
-// Handle uncaught exceptions
-process.on('uncaughtException', (error: Error) => {
-  logger.error('Uncaught Exception:', { error });
-  process.exit(1);
-});
-
-// Graceful shutdown
-process.on('SIGINT', async () => {
-  logger.info('Received SIGINT, shutting down gracefully...');
-  process.exit(0);
-});
-
-process.on('SIGTERM', async () => {
-  logger.info('Received SIGTERM, shutting down gracefully...');
-  process.exit(0);
-});
+// NOTE: process-level handlers for unhandledRejection / uncaughtException /
+// SIGINT / SIGTERM are intentionally NOT registered at module scope.
+// `errorHandler.setupProcessHandlers()` (called inside startServer) owns
+// all of those, including a graceful-shutdown path with timeout. Registering
+// them both at module scope and via the ErrorHandler caused both callbacks
+// to fire on every signal — duplicate logs, racing process.exit() calls.
 
 // Start the server
 startServer().catch((error) => {

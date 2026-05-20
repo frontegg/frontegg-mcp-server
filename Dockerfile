@@ -38,10 +38,12 @@ RUN npm ci --only=production && \
     npm cache clean --force
 
 # Copy built application from builder stage
-COPY --from=builder /app/dist ./dist
+COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
 
-# Copy any additional files needed
-COPY --chown=nodejs:nodejs . .
+# Copy only the runtime files the production image actually needs
+# (was: COPY . . which overwrote the builder-stage dist/ with source files
+# and pulled tests/node_modules/etc. into the production image)
+COPY --chown=nodejs:nodejs README.md LICENSE ./
 
 # Create logs directory
 RUN mkdir -p logs && chown -R nodejs:nodejs logs
