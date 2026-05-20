@@ -27,7 +27,7 @@
 
 > **Companion repos:**
 > - 🧠 [**`frontegg/coding-agent-skills`**](https://github.com/frontegg/coding-agent-skills) — 12 Claude Skills that orchestrate these tools end-to-end
-> - 🚀 [**`frontegg/frontegg-dev`**](https://github.com/frontegg/frontegg-dev) — one-command installer that wires both into your AI client
+> - 🚀 [**`frontegg/coding-agent-toolkit`**](https://github.com/frontegg/coding-agent-toolkit) — one-command installer that wires both into your AI client
 
 <br/>
 

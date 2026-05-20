@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/frontegg/frontegg-mcp-server.git"
   },
-  "homepage": "https://github.com/frontegg/frontegg-dev",
+  "homepage": "https://github.com/frontegg/coding-agent-toolkit",
   "bugs": "https://github.com/frontegg/frontegg-mcp-server/issues",
   "publishConfig": {
     "access": "public"
