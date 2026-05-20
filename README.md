@@ -9,7 +9,7 @@
 [![SDKs](https://img.shields.io/badge/SDKs-5-f43f5e?style=for-the-badge)](#supported-sdks)
 [![Tools](https://img.shields.io/badge/Tools-96-10b981?style=for-the-badge)](#tools)
 [![Rules](https://img.shields.io/badge/Rules-135+-06b6d4?style=for-the-badge)](#what-it-checks)
-[![License: MIT](https://img.shields.io/badge/License-MIT-007acc?style=for-the-badge)](./LICENSE)
+[![License: ISC](https://img.shields.io/badge/License-ISC-007acc?style=for-the-badge)](./LICENSE)
 
 <br/>
 
@@ -117,8 +117,8 @@ Flags `http://` base URLs, hardcoded credentials, `.env` outside `.gitignore`, i
 ## Install
 
 ```bash
-git clone https://github.com/frontegg/frontegg-mcp-support.git
-cd frontegg-mcp-support
+git clone https://github.com/frontegg/frontegg-mcp-server.git
+cd frontegg-mcp-server
 npm install
 npm run build
 ```
@@ -145,7 +145,7 @@ Edit `~/.cursor/mcp.json`:
   "mcpServers": {
     "frontegg-mobile": {
       "command": "node",
-      "args": ["/absolute/path/to/frontegg-mcp-support/dist/index.js"],
+      "args": ["/absolute/path/to/frontegg-mcp-server/dist/index.js"],
       "env": {
         "FRONTEGG_CLIENT_ID": "your-client-id",
         "FRONTEGG_SECRET": "your-api-secret"
@@ -179,7 +179,7 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) o
 claude mcp add frontegg-mobile \
   -e FRONTEGG_CLIENT_ID=your-client-id \
   -e FRONTEGG_SECRET=your-api-secret \
-  -- node /absolute/path/to/frontegg-mcp-support/dist/index.js
+  -- node /absolute/path/to/frontegg-mcp-server/dist/index.js
 ```
 
 Omit the `-e` flags if you only need diagnose/fix tools.
@@ -645,7 +645,7 @@ Both are UUIDs in the format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`.
   "mcpServers": {
     "frontegg-mobile": {
       "command": "node",
-      "args": ["/absolute/path/to/frontegg-mcp-support/dist/index.js"],
+      "args": ["/absolute/path/to/frontegg-mcp-server/dist/index.js"],
       "env": {
         "GITHUB_TOKEN": "ghp_xxx",
         "FRONTEGG_CLIENT_ID": "your-client-id",
