@@ -1,0 +1,61 @@
+import { McpServer } from "../../sdk-compat.js";
+import { z } from "zod";
+import {
+  buildFronteggUrl,
+  createBaseHeaders,
+  fetchFromFrontegg,
+  formatToolResponse,
+  FronteggEndpoints,
+  HttpMethods,
+} from "../../utils/api/frontegg-api.js";
+
+const deleteUserSchema = z.object({
+  userId: z.string().describe("The unique identifier for the user to delete."),
+  fronteggTenantIdHeader: z
+    .string()
+    .optional()
+    .describe("Optional Tenant ID for context."),
+});
+
+type DeleteUserArgs = z.infer<typeof deleteUserSchema>;
+
+async function handleDeleteUser(params: DeleteUserArgs) {
+  const { userId, fronteggTenantIdHeader } = params;
+
+  const endpoint = `${FronteggEndpoints.USERS}/${userId}`;
+  const apiUrl = buildFronteggUrl(endpoint);
+  const headers = createBaseHeaders({
+    fronteggTenantIdHeader,
+  });
+
+  const response = await fetchFromFrontegg(
+    HttpMethods.DELETE,
+    apiUrl,
+    headers,
+    undefined,
+    "delete-user"
+  );
+
+  if (response.status === 204) {
+    return formatToolResponse(
+      {
+        success: true,
+        status: 204,
+        statusText: "No Content",
+        data: { message: `User ${userId} deleted successfully.` },
+      },
+      `User ${userId} deleted successfully.`
+    );
+  } else {
+    return formatToolResponse(response);
+  }
+}
+
+export function registerDeleteUserTool(server: McpServer) {
+  server.tool(
+    "delete-user",
+    "Deletes a specific user by their ID.",
+    deleteUserSchema.shape,
+    (params: DeleteUserArgs) => handleDeleteUser(params)
+  );
+}

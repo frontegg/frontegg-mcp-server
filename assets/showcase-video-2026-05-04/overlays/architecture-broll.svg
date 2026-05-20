@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" style="background: #0B0B16">
+  <defs>
+    <style>
+      .node { fill: #15151F; stroke: #5C3DE6; stroke-width: 2; }
+      .label { fill: #F5F5FA; font: 600 26px -apple-system, "Inter", sans-serif; }
+      .sub { fill: #8B8B9E; font: 400 18px -apple-system, "Inter", sans-serif; }
+      .flow { stroke: #5C3DE6; stroke-width: 3; fill: none; stroke-dasharray: 8 4; }
+      .flow-anim { animation: dash 2s linear infinite; }
+      @keyframes dash { to { stroke-dashoffset: -24; } }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5C3DE6"/>
+    </marker>
+  </defs>
+
+  <!-- Canonical repo (left) -->
+  <rect class="node" x="120" y="440" width="320" height="200" rx="16"/>
+  <text class="label" x="280" y="525" text-anchor="middle">Canonical Frontegg repo</text>
+  <text class="sub" x="280" y="558" text-anchor="middle">github.com/frontegg/...</text>
+  <text class="sub" x="280" y="585" text-anchor="middle">README · examples · manifests</text>
+
+  <!-- MCP (center) -->
+  <rect class="node" x="800" y="440" width="320" height="200" rx="16"/>
+  <text class="label" x="960" y="525" text-anchor="middle">Frontegg Mobile MCP</text>
+  <text class="sub" x="960" y="558" text-anchor="middle">15 tools · 135+ rules</text>
+  <text class="sub" x="960" y="585" text-anchor="middle">canonical fetch · 6h cache</text>
+
+  <!-- Customer project (right) -->
+  <rect class="node" x="1480" y="440" width="320" height="200" rx="16"/>
+  <text class="label" x="1640" y="525" text-anchor="middle">Your customer's project</text>
+  <text class="sub" x="1640" y="558" text-anchor="middle">iOS · Android · cross-platform</text>
+  <text class="sub" x="1640" y="585" text-anchor="middle">findings + diffs applied</text>
+
+  <!-- Flows -->
+  <path class="flow flow-anim" d="M440 540 L800 540" marker-end="url(#arrow)"/>
+  <path class="flow flow-anim" d="M1120 540 L1480 540" marker-end="url(#arrow)"/>
+
+  <!-- Title -->
+  <text class="label" x="960" y="220" text-anchor="middle" style="font-size: 40px;">Where the value comes from</text>
+  <text class="sub" x="960" y="270" text-anchor="middle" style="font-size: 22px;">The MCP grounds the AI in your canonical SDK repo. Every diff is sourced. Every claim is evidence-backed.</text>
+</svg>

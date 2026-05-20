@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  :root { --frontegg-purple: #5C3DE6; --bg-dim: rgba(11, 11, 22, 0.85); --fg: #F5F5FA; --warn: #FFB347; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { width: 1920px; height: 1080px; background: transparent; font-family: -apple-system, "Inter", sans-serif; }
+  .badge { position: absolute; top: 40px; padding: 12px 28px; background: var(--bg-dim); color: var(--fg); font-size: 24px; font-weight: 600; letter-spacing: 0.05em; border-radius: 999px; }
+  .left { left: 80px; border: 2px solid var(--warn); color: var(--warn); }
+  .right { right: 80px; border: 2px solid var(--frontegg-purple); color: var(--frontegg-purple); }
+  .vline { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, transparent, var(--frontegg-purple), transparent); transform: translateX(-50%); }
+</style>
+</head>
+<body>
+<div class="badge left">MCP off — AI alone</div>
+<div class="badge right">MCP on — grounded in your repo</div>
+<div class="vline"></div>
+</body>
+</html>

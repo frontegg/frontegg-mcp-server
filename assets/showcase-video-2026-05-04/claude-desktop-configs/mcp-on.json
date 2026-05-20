@@ -1,0 +1,9 @@
+{
+  "_comment": "Recording-day instructions: copy this file to ~/Library/Application Support/Claude/claude_desktop_config.json, then add an 'env' block with literal credential values. Do NOT commit a populated copy. The recording-checklist points at ~/Showcase/frontegg-api-creds.env (outside the repo, mode 600) for the values.",
+  "mcpServers": {
+    "frontegg-mobile": {
+      "command": "node",
+      "args": ["/Users/dianakhortiuk/frontegg-mcp-support/dist/index.js"]
+    }
+  }
+}

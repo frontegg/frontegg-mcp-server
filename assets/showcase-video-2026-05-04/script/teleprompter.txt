@@ -1,0 +1,70 @@
+Every new mobile customer hits the same wall.
+Deep links. Plist entries. Init order.
+It's the longest, most CSM-expensive moment
+of their relationship with us.
+
+Same model. Same prompt. Two windows.
+The one on the left has nothing extra.
+The one on the right has the
+Frontegg Mobile MCP connected.
+
+On the left, generic guesses.
+None of it grounded in your actual codebase.
+On the right, the MCP fetched four files
+from your canonical SDK repo
+and identified six specific issues,
+with the exact lines to change.
+
+This isn't the model getting smarter.
+This is your MCP grounding it
+in your canonical repo.
+
+The MCP applies the diffs.
+Backups created.
+
+Build runs. Login completes end-to-end.
+The customer didn't open a ticket.
+CS didn't get pulled in.
+Engineering didn't escalate.
+
+And the MCP itself?
+It runs without an AI at all.
+Same detector, same findings —
+straight from your terminal.
+
+Same MCP. Different SDK.
+
+Same customer, week three.
+They need to enforce MFA.
+The MCP reads the current policy
+from the Frontegg API, renders it,
+updates it.
+No portal training. No ticket. No engineer.
+
+The change is reflected in the Frontegg portal.
+Audit-trail intact.
+Vendor permissions respected.
+
+The Frontegg Mobile MCP.
+Works in Cursor.
+Works in Claude Code.
+Works in Claude Desktop.
+Works in any MCP-compatible client.
+The intelligence is the MCP.
+The chat is just the surface.
+
+What this changes, in your numbers.
+
+Time to first successful mobile login.
+Your data here.
+
+CSM hours per new mobile customer onboarding.
+Your data here.
+
+Mobile-auth tickets per quarter,
+projected deflection.
+Your data here.
+
+Your customers ship faster.
+Your CSMs scale further.
+Same team, more accounts.

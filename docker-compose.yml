@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  frontegg-mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    image: frontegg-support-mcp:latest
+    container_name: frontegg-mcp-server
+    restart: unless-stopped
+    environment:
+      # Frontegg Configuration
+      - FRONTEGG_CLIENT_ID=${FRONTEGG_CLIENT_ID}
+      - FRONTEGG_SECRET=${FRONTEGG_SECRET}
+      - FRONTEGG_BASE_URL=${FRONTEGG_BASE_URL:-https://api.frontegg.com}
+      - FRONTEGG_AUTH_ENDPOINT=${FRONTEGG_AUTH_ENDPOINT:-/auth/vendor}
+      - FRONTEGG_SUPPORT_ENDPOINT=${FRONTEGG_SUPPORT_ENDPOINT:-/support/assistant}
+      # Server Configuration
+      - NODE_ENV=${NODE_ENV:-production}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - PORT=${PORT:-3000}
+      # Cache Configuration
+      - CACHE_TTL_SECONDS=${CACHE_TTL_SECONDS:-3600}
+      - AUTH_TOKEN_CACHE_TTL_SECONDS=${AUTH_TOKEN_CACHE_TTL_SECONDS:-3300}
+      # Retry Configuration
+      - MAX_RETRY_ATTEMPTS=${MAX_RETRY_ATTEMPTS:-3}
+      - RETRY_DELAY_MS=${RETRY_DELAY_MS:-1000}
+      # Rate Limiting
+      - RATE_LIMIT_REQUESTS_PER_MINUTE=${RATE_LIMIT_REQUESTS_PER_MINUTE:-60}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "process.exit(0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - frontegg-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Optional: Add a monitoring service
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   container_name: prometheus
+  #   volumes:
+  #     - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+  #     - prometheus_data:/prometheus
+  #   ports:
+  #     - "9090:9090"
+  #   networks:
+  #     - frontegg-network
+
+networks:
+  frontegg-network:
+    driver: bridge
+
+volumes:
+  prometheus_data:
