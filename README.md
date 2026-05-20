@@ -13,7 +13,7 @@
 
 <br/>
 
-<img src="docs/demos/demo-rn.gif" alt="Frontegg Mobile MCP Server detecting React Native deep-link issues and emitting ready-to-apply diffs" width="92%"/>
+<img src="docs/demos/demo-rn.gif" alt="Frontegg MCP Server detecting React Native deep-link issues and emitting ready-to-apply diffs" width="92%"/>
 
 <br/><br/>
 
@@ -26,7 +26,7 @@
 <br/>
 
 > **Companion repos:**
-> - 🧠 [**`frontegg/coding-agent-skills`**](https://github.com/frontegg/coding-agent-skills) — 12 Claude Skills that orchestrate these tools end-to-end
+> - 🧠 [**`frontegg/coding-agent-skills`**](https://github.com/frontegg/coding-agent-skills) — 27 trigger-activated skills that orchestrate these tools end-to-end
 > - 🚀 [**`frontegg/coding-agent-toolkit`**](https://github.com/frontegg/coding-agent-toolkit) — one-command installer that wires both into your AI client
 
 <br/>
@@ -117,6 +117,8 @@ Flags `http://` base URLs, hardcoded credentials, `.env` outside `.gitignore`, i
 ## Install
 
 This server installs **standalone** — no other Frontegg tooling required. The package is published on npm as [`@frontegg/frontegg-mcp-server`](https://www.npmjs.com/package/@frontegg/frontegg-mcp-server). Wire it directly into any MCP-compatible client; `npx` fetches the latest version on first run.
+
+> ⚠️ **Version note.** This branch / PR is `2.0.0` (96 tools — mobile + platform). npm currently has the pre-merge `1.0.1` (49 platform tools only). Until PR #24 merges and `2.0.0` ships to npm, `npx --yes @frontegg/frontegg-mcp-server` will fetch `1.0.1`. To run the full 96-tool surface today, use the [Development](#development) clone-and-build flow below.
 
 > **Want the tenant configuration tools (MFA, SSO, users, branding, audit logs, etc.)?** Set the `FRONTEGG_CLIENT_ID` + `FRONTEGG_API_KEY` env vars in your client's MCP config. The diagnose / fix tools work without them. See [Configuration](#configuration) for where to find your Frontegg credentials.
 
