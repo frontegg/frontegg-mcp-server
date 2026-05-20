@@ -38,7 +38,7 @@
 - [Highlights](#highlights)
 - [Supported SDKs](#supported-sdks)
 - [Install](#install)
-- [Connect to your client](#connect-to-your-client)
+- [Development](#development)
 - [Quick start](#quick-start)
 - [What you can ask it](#what-you-can-ask-it)
 - [Examples](#examples)
@@ -116,22 +116,9 @@ Flags `http://` base URLs, hardcoded credentials, `.env` outside `.gitignore`, i
 
 ## Install
 
-```bash
-git clone https://github.com/frontegg/frontegg-mcp-server.git
-cd frontegg-mcp-server
-npm install
-npm run build
-```
+This server installs **standalone** — no other Frontegg tooling required. The package is published on npm as [`@frontegg/frontegg-mcp-server`](https://www.npmjs.com/package/@frontegg/frontegg-mcp-server). Wire it directly into any MCP-compatible client; `npx` fetches the latest version on first run.
 
-Note the absolute path to `dist/index.js`. You'll need it next.
-
-> **Using `nvm`?** GUI apps don't inherit your shell PATH. Use the absolute path from `which node`, or point `command` at `bin/mcp-launcher.sh`.
-
----
-
-## Connect to your client
-
-> **Want the tenant configuration tools (MFA, SSO, users, branding, audit logs, etc.)?** Add the `env` block from each example below. The diagnose / fix tools work without it. See [Configuration](#configuration) for where to find your Frontegg credentials.
+> **Want the tenant configuration tools (MFA, SSO, users, branding, audit logs, etc.)?** Set the `FRONTEGG_CLIENT_ID` + `FRONTEGG_API_KEY` env vars in your client's MCP config. The diagnose / fix tools work without them. See [Configuration](#configuration) for where to find your Frontegg credentials.
 
 <details open>
 <summary><b>Cursor</b></summary>
@@ -143,12 +130,12 @@ Edit `~/.cursor/mcp.json`:
 ```json
 {
   "mcpServers": {
-    "frontegg-mobile": {
-      "command": "node",
-      "args": ["/absolute/path/to/frontegg-mcp-server/dist/index.js"],
+    "frontegg": {
+      "command": "npx",
+      "args": ["--yes", "@frontegg/frontegg-mcp-server"],
       "env": {
         "FRONTEGG_CLIENT_ID": "your-client-id",
-        "FRONTEGG_SECRET": "your-api-secret"
+        "FRONTEGG_API_KEY": "your-api-secret"
       }
     }
   }
@@ -176,10 +163,10 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) o
 <br/>
 
 ```bash
-claude mcp add frontegg-mobile \
+claude mcp add frontegg \
   -e FRONTEGG_CLIENT_ID=your-client-id \
-  -e FRONTEGG_SECRET=your-api-secret \
-  -- node /absolute/path/to/frontegg-mcp-server/dist/index.js
+  -e FRONTEGG_API_KEY=your-api-secret \
+  -- npx --yes @frontegg/frontegg-mcp-server
 ```
 
 Omit the `-e` flags if you only need diagnose/fix tools.
@@ -191,9 +178,42 @@ Omit the `-e` flags if you only need diagnose/fix tools.
 
 <br/>
 
-Speaks MCP over stdio. Launch with `node dist/index.js`. Set `FRONTEGG_CLIENT_ID` and `FRONTEGG_SECRET` in the process environment if you need tenant API tools.
+Speaks MCP over stdio. Launch with `npx --yes @frontegg/frontegg-mcp-server`. Set `FRONTEGG_CLIENT_ID` and `FRONTEGG_API_KEY` in the process environment if you need tenant API tools.
 
 </details>
+
+<details>
+<summary><b>Want the combined stack (MCP + skills + auto-wiring + credential validation)?</b></summary>
+
+<br/>
+
+That's what the [`coding-agent-toolkit`](https://github.com/frontegg/coding-agent-toolkit) does:
+
+```bash
+npx @frontegg/coding-agent-toolkit init
+```
+
+It auto-detects your client, validates your Frontegg credentials against the Management API before saving them, wires the MCP entry, and installs the matching skills. Use it when you want both the MCP and skills in one go. MCP-only users don't need it — the per-client snippets above are sufficient.
+
+</details>
+
+---
+
+## Development
+
+To build from source (for contributing or running a fork):
+
+```bash
+git clone https://github.com/frontegg/frontegg-mcp-server.git
+cd frontegg-mcp-server
+npm install
+npm run build              # tsc → dist/
+npm test                   # 215 jest + 89 vitest
+```
+
+Point your client at `node /absolute/path/to/frontegg-mcp-server/dist/index.js` to test local changes.
+
+> **Using `nvm`?** GUI apps don't inherit your shell PATH. Use the absolute path from `which node`.
 
 ---
 
