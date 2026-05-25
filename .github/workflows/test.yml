@@ -1,0 +1,40 @@
+name: Test
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test (Node ${{ matrix.node }}, ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: ['18', '20', '22']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - name: Smoke — tools/list returns 96 tools
+        if: matrix.node == '20' && matrix.os == 'ubuntu-latest'
+        run: |
+          actual=$(echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' \
+            | FRONTEGG_CLIENT_ID=test FRONTEGG_API_KEY=test node dist/index.js \
+            | python3 -c "import sys,json; print(len(json.load(sys.stdin)['result']['tools']))")
+          if [ "$actual" != "96" ]; then
+            echo "::error::Expected 96 tools, got $actual"
+            exit 1
+          fi

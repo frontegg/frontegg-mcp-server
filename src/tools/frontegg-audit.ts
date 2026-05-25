@@ -58,7 +58,8 @@ const AUDIT_TOOL: McpTool = {
   description:
     'Query Frontegg vendor-environment audit logs (login/logout/failed-attempts/' +
     'config changes/SDK events). Supports filtering by tenant, user, date range, ' +
-    'severity, and free-text. ' +
+    'severity, and free-text. Page size (count) is capped at 500 to stay within ' +
+    'MCP transport response-size limits — paginate via offset for larger queries. ' +
     'Endpoint: GET /audits/resources/audits/v2. ' +
     'Requires FRONTEGG_CLIENT_ID + FRONTEGG_SECRET env vars.',
   inputSchema: {
@@ -107,7 +108,7 @@ const AUDIT_TOOL: McpTool = {
       },
       count: {
         type: 'number',
-        description: 'Page size. Default 50.',
+        description: 'Page size. Default 50. Capped at 500 to stay within MCP transport limits.',
       },
       offset: {
         type: 'number',
@@ -127,7 +128,10 @@ const AuditArgsSchema = z.object({
   toDate: z.string().optional(),
   sortBy: z.string().optional(),
   sortDirection: z.enum(['asc', 'desc']).optional(),
-  count: z.number().int().positive().optional(),
+  // Cap page size at 500 so a careless caller can't blow past MCP
+  // transport response-size limits. Larger queries should paginate
+  // via offset.
+  count: z.number().int().positive().max(500).optional(),
   offset: z.number().int().nonnegative().optional(),
 });
 
