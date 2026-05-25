@@ -88,6 +88,24 @@ describe('frontegg_audit_logs', () => {
     expect(mockedApi).not.toHaveBeenCalled();
   });
 
+  test('count is capped at 500 — count: 600 fails schema and does not hit the API', async () => {
+    // Without the cap, a caller could request 1M rows and blow past the MCP
+    // transport response-size limit. Zod's .max(500) on count keeps things
+    // sane; the tool surfaces the error as a normal text result.
+    const r = await handleAuditLogs({ count: 600 });
+    expect(r.content[0]?.text).toContain('Error');
+    expect(mockedApi).not.toHaveBeenCalled();
+  });
+
+  test('count: 500 is allowed (exact boundary)', async () => {
+    mockedApi.mockResolvedValueOnce({ data: [], total: 0 });
+    const r = await handleAuditLogs({ count: 500 });
+    expect(mockedApi).toHaveBeenCalledTimes(1);
+    const call = mockedApi.mock.calls[0]![0];
+    expect(call.path).toContain('count=500');
+    expect(r.content[0]?.text).toContain('Audit Events');
+  });
+
   test('handles 404 cleanly', async () => {
     mockedApi.mockRejectedValueOnce(new FronteggApiError('not found', 404));
     const r = await handleAuditLogs({});

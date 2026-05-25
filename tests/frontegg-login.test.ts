@@ -326,6 +326,61 @@ describe('handleLogin', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  test('loopback server bind failure (EADDRINUSE) surfaces as a sign-in error', async () => {
+    // Audit-flagged: if port 8765 is occupied, the loopback server can't bind
+    // and waitForCallback rejects. Verify the error path lands gracefully (no
+    // crash, no session created) and the message references the underlying
+    // problem.
+    const fetchMock = jest.fn();
+    const r = await handleLogin(
+      {},
+      {
+        envReader: () => ({ appClientId: 'app-1', subdomain: 'app-acme' }),
+        openBrowserImpl: async () => undefined,
+        waitForCallbackImpl: async () => {
+          const err = new Error(
+            'listen EADDRINUSE: address already in use 127.0.0.1:8765',
+          ) as NodeJS.ErrnoException;
+          err.code = 'EADDRINUSE';
+          throw err;
+        },
+        fetchImpl: fetchMock as unknown as typeof fetch,
+      },
+    );
+    expect(r.content[0]?.text).toMatch(/Sign-in failed/);
+    expect(r.content[0]?.text).toMatch(/EADDRINUSE/);
+    expect(isAuthenticated()).toBe(false);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  test('browser-open failure surfaces a paste-URL fallback when callback also fails', async () => {
+    // Audit-flagged: when the auto-launch fails (no DISPLAY in WSL, sandboxed
+    // env, etc.), the loopback callback will time out — we still need to give
+    // the user a copy-pasteable URL so they can sign in manually.
+    const fetchMock = jest.fn();
+    const r = await handleLogin(
+      {},
+      {
+        envReader: () => ({ appClientId: 'app-1', subdomain: 'app-acme' }),
+        // Browser-open fails synchronously inside the catch handler.
+        openBrowserImpl: async () => {
+          throw new Error('xdg-open: command not found');
+        },
+        waitForCallbackImpl: async () =>
+          new Promise((_resolve, reject) =>
+            setTimeout(() => reject(new Error('Login timed out. Try again.')), 50),
+          ),
+        fetchImpl: fetchMock as unknown as typeof fetch,
+      },
+    );
+    const text = r.content[0]?.text ?? '';
+    expect(text).toMatch(/Could not open browser/);
+    expect(text).toMatch(/manually/);
+    // The pasteable authorize URL must be in the message.
+    expect(text).toMatch(/app-acme\.frontegg\.com\/oauth\/authorize/);
+    expect(isAuthenticated()).toBe(false);
+  });
+
   test('does not leak vendor secrets in error messages', async () => {
     // Populate env with vendor creds that MUST NOT appear in any output.
     const originalSecret = process.env.FRONTEGG_SECRET;

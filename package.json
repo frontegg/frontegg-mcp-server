@@ -25,6 +25,7 @@
     "start": "node dist/index.js",
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
+    "postbuild": "chmod +x dist/index.js",
     "clean": "rimraf dist",
     "test": "npm run test:jest && npm run test:vitest",
     "test:jest": "jest",
