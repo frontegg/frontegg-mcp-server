@@ -82,7 +82,24 @@ export class ConfigManager {
     const rawConfig = {
       frontegg: {
         clientId: process.env.FRONTEGG_CLIENT_ID || '',
-        secret: process.env.FRONTEGG_SECRET || '',
+        // Accept three env-var spellings for the vendor secret:
+        //   - FRONTEGG_SECRET     — legacy upstream name (kept for back-compat
+        //                           with anyone wired up via the old README)
+        //   - FRONTEGG_API_KEY    — what the coding-agent-toolkit installer
+        //                           writes (matches Frontegg portal labelling
+        //                           "API Key" + matches the platform tools at
+        //                           src/platform/auth.ts which already accept
+        //                           both API_KEY and SECRET_KEY)
+        //   - FRONTEGG_SECRET_KEY — toolkit mirror alias for symmetry
+        //
+        // Without all three accepted, mobile/audit tools failed to authenticate
+        // when the MCP was installed via the toolkit (Pavel's QA bug — the
+        // platform tools worked because they already accepted the aliases).
+        secret:
+          process.env.FRONTEGG_SECRET ||
+          process.env.FRONTEGG_API_KEY ||
+          process.env.FRONTEGG_SECRET_KEY ||
+          '',
         baseUrl: process.env.FRONTEGG_BASE_URL || 'https://api.frontegg.com',
         authEndpoint: process.env.FRONTEGG_AUTH_ENDPOINT || '/auth/vendor',
         supportEndpoint: process.env.FRONTEGG_SUPPORT_ENDPOINT || '/support/assistant',
